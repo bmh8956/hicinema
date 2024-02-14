@@ -17,8 +17,8 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-#build.gradle
-#application.properties
+build.gradle
+application.properties
 
 ### IntelliJ IDEA ###
 .idea
