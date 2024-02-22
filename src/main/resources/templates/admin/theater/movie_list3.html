@@ -4,7 +4,19 @@
       layout:decorate="~{/layouts/layout_admin}">
 
 <th:block layout:fragment="css">
+    <style>
+        th, td {
+            text-align: center;
+        }
 
+        .screen-type code{
+            cursor: pointer;
+        }
+
+        .screen-type code:hover, .screen-type code.active {
+            border-bottom: 1px solid #e83e8c;
+        }
+    </style>
 </th:block>
 
 <div class="container-scroller">
@@ -15,7 +27,7 @@
             <div layout:fragment="content" class="content-wrapper">
                 <div class="page-header">
                     <h3 class="page-title">
-                        영화관
+                        영화
                     </h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -30,35 +42,39 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <h4 class="card-title">영화관 목록</h4>
-                                        <p class="card-description">
-                                            <code>전체</code>
+                                        <h4 class="card-title">영화 리스트</h4>
+                                        <p class="card-description screen-type">
+                                            <code data-link="/admin/theater/movie_list">상영중</code>
+                                            <code data-link="/admin/theater/movie_listSoon">상영예정</code>
+                                            <code data-link="/admin/theater/movie_listEnd">상영종료</code>
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <a href="/admin/theater/theater_form" class="btn btn-gradient-primary mr-2"
-                                           style="float: right">영화관 추가</a>
+                                        <a href="/admin/theater/theater_form" class="btn btn-gradient-info mr-2"
+                                           style="float: right">영화 업데이트</a>
+                                        <a href="/admin/theater/movie_form" class="btn btn-gradient-primary mr-2"
+                                           style="float: right">영화 추가</a>
                                     </div>
                                 </div>
                                 <form>
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <label for="exampleFormControlSelect3">지역</label>
+                                                <label for="exampleFormControlSelect3">장르</label>
                                                 <select class="form-control form-control-sm"
                                                         id="exampleFormControlSelect3">
                                                     <option>전체</option>
-                                                    <option>서울</option>
-                                                    <option>인천/경기</option>
-                                                    <option>충천/대전</option>
-                                                    <option>강원</option>
-                                                    <option>제주</option>
+                                                    <option>액션</option>
+                                                    <option>판타지</option>
+                                                    <option>드라마</option>
+                                                    <option>스릴러</option>
+                                                    <option>공포</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <label for="exampleInputUsername1">영화관 명</label>
+                                                <label for="exampleInputUsername1">영화 제목</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1"
                                                        placeholder="Username">
                                             </div>
@@ -77,12 +93,12 @@
                                         <th width="5%">
                                             <input type="checkbox" class="all_check">
                                         </th>
-                                        <th width="10%">No</th>
-                                        <th width="10%">지역</th>
-                                        <th width="25%">영화관</th>
-                                        <th width="30%">주소</th>
-                                        <th width="10%">총 상영관수</th>
-                                        <th width="10%">총 좌석수</th>
+                                        <th width="5%">No</th>
+                                        <th width="25%">장르</th>
+                                        <th width="30%">영화 제목</th>
+                                        <th width="10%">상영등급</th>
+                                        <th width="10%">러닝타임</th>
+                                        <th width="10%">개봉일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -91,45 +107,11 @@
                                             <input type="checkbox">
                                         </td>
                                         <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/theater/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/theater/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/theater/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/theater/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
-                                    </tr>
+                                        <td>판타지, 드라마 / 미국</td>
+                                        <td class="text-primary"><a href="/admin/theater/movie_detail">웡카</a></td>
+                                        <td>전체관람가</td>
+                                        <td>116</td>
+                                        <td>2024.01.31</td>
                                     </tbody>
                                 </table>
                                 <div class="pagination-area" style="text-align: center">
@@ -146,13 +128,25 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
     </div>
 </div>
 
 <th:block layout:fragment="script">
-
+    <script>
+        let code = document.querySelectorAll(".screen-type code")
+        let current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+        for(let c of code) {
+            let cur_code = c.dataset.link.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+            if(cur_code === current) {
+                c.classList.add("active");
+            }
+            c.onclick = () => {
+                location.href = c.dataset.link;
+            }
+        }
+    </script>
 </th:block>
 
 </body>
