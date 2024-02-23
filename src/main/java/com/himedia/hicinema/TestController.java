@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TestController {
 
-//	@GetMapping("/")
-//	public String index_test() {
-//		return "user/main";
-//	}
+	@GetMapping("/")
+	public String index_test() {
+		return "user/main";
+	}
 //
 //	@GetMapping("/movie/list")
 //	public String movie_list(Model model) {
@@ -47,5 +47,14 @@ public class TestController {
 //		model.addAttribute("title", "결제");
 //		return "user/ticketing_order";
 //	}
+	
+//	slide/main_slide
+	@GetMapping("/main_slide")
+	public String mainSlide(Model model) {
+		model.addAttribute("title", "메인슬라이드 등록");
+		return "admin/slide/main_slide";
+	} 
+	
+
 }
 

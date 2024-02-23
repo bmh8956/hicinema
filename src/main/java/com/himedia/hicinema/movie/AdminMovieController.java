@@ -83,4 +83,6 @@ public class AdminMovieController {
 		model.addAttribute("title", "영화 상세");
 		return "admin/movie/movie_detail";
 	}
+	
+
 }
