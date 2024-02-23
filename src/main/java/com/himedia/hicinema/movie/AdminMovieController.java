@@ -11,19 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/movie")
 public class AdminMovieController {
 
-//	@GetMapping("")
-//	public String admin(Model model) {
-//		log.info("admin page");
-//		model.addAttribute("title", "관리자 메인");
-//		return "redirect:/admin/index";
-//	}
-//
-//	@GetMapping("/index")
-//	public String index(Model model) {
-//		model.addAttribute("title", "관리자 메인");
-//		return "admin/index";
-//	}
-
 	@GetMapping("/theater_list")
 	public String theaterList(Model model) {
 		model.addAttribute("title", "영화관 리스트");
@@ -84,5 +71,4 @@ public class AdminMovieController {
 		return "admin/movie/movie_detail";
 	}
 	
-
 }
