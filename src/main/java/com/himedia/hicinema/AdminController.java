@@ -13,12 +13,12 @@ public class AdminController {
 
 	@GetMapping(value = {"", "/"})
 	public String admin(Model model) {
+		model.addAttribute("title", "관리자 메인");
 		return "admin/index";
 	}
 
 	@GetMapping("/index")
 	public String index(Model model) {
-		model.addAttribute("title", "관리자 메인");
 		return "redirect:/admin";
 	}
 }
