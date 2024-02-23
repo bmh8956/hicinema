@@ -9,13 +9,15 @@ import com.himedia.hicinema.movie.AdminMovieController;
 
 import lombok.extern.slf4j.Slf4j;
 
+
+@Controller
+@RequestMapping("/admin/slide")
 public class AdminSlideController {
 
 	
-//	@Controller
-	@RequestMapping("/admin/slide")
+
 	
-//	slide/main_slide
+//	admin/slide/main_slide
 	@GetMapping("/main_slide")
 	public String mainSlide(Model model) {
 		model.addAttribute("title", "메인슬라이드 등록");
