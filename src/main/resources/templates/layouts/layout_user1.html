@@ -82,11 +82,10 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css}" />
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
 
-<!--    <div th:replace="user_test/common/commonCss.html"></div>-->
     <style>
-        .content > .section {
-            padding-top: 20%;
-        }
+        /*.content > .section {*/
+        /*    padding-top: 20%;*/
+        /*}*/
     </style>
 
     <th:block layout:fragment="css"></th:block>
@@ -95,6 +94,7 @@
 <body>
 
 <div th:replace="fragments/header::header"></div>
+<section th:replace="fragments/banner::banner" class="hero-area4"></section>
 
 <div layout:fragment="content" class="content">
 
@@ -137,6 +137,7 @@
 <!-- Easing JS -->
 <script th:src="@{/js/easing.js}"></script>
 <!-- Active JS -->
+<script th:src="@{/js/common.js}"></script>
 <script th:src="@{/js/active.js}"></script>
 <script th:src="@{/js/header.js}"></script>
 

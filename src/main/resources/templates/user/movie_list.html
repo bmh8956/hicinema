@@ -18,10 +18,10 @@
                                 <div class="list-top">
                                     <div class="shop-top nav-main">
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item"><a class="nav-link active" data-toggle="tab"
+                                            <li class="nav-item"><a class="nav-link" th:classappend="${(type == 'n')? 'active' : ''}" data-toggle="tab"
                                                                     href="#screening"
                                                                     role="tab">현재 상영작</a></li>
-                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#scheduled"
+                                            <li class="nav-item"><a class="nav-link" th:classappend="${(type == 'e')? 'active' : ''}" data-toggle="tab" href="#scheduled"
                                                                     role="tab">미개봉</a></li>
                                             <li class="nav-item"><a class="nav-link" data-toggle="tab"
                                                                     href="#not_screen"
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="screening" role="tabpanel">
+                                    <div class="tab-pane fade" id="screening" th:classappend="${(type == 'n')? 'active show' : ''}" role="tabpanel">
                                         <div class="tab-single">
                                             <div class="row">
                                                 <div class="col-lg-2 col-md-6 col-12">
@@ -46,10 +46,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -74,10 +74,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -102,10 +102,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -130,10 +130,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -158,10 +158,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -186,10 +186,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -214,10 +214,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -242,10 +242,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -270,10 +270,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -298,10 +298,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -326,10 +326,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -354,10 +354,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -382,10 +382,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -410,10 +410,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -438,10 +438,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -466,10 +466,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -494,10 +494,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -522,10 +522,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -550,10 +550,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -578,10 +578,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -606,10 +606,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -634,10 +634,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -662,10 +662,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -690,10 +690,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -718,10 +718,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -746,10 +746,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -774,10 +774,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -802,10 +802,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -830,10 +830,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -858,10 +858,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -886,10 +886,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -914,10 +914,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202401/20701_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -937,7 +937,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="scheduled" role="tabpanel">
+                                    <div class="tab-pane fade" id="scheduled" th:classappend="${(type == 'e')? 'active show' : ''}" role="tabpanel">
                                         <div class="tab-single">
                                             <div class="row">
                                                 <div class="col-lg-2 col-md-6 col-12">
@@ -948,10 +948,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/reservation/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -976,10 +976,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1004,10 +1004,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1032,10 +1032,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1060,10 +1060,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1088,10 +1088,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1116,10 +1116,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1144,10 +1144,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1172,10 +1172,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1200,10 +1200,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1228,10 +1228,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1256,10 +1256,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1284,10 +1284,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1312,10 +1312,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1340,10 +1340,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1368,10 +1368,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1396,10 +1396,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1424,10 +1424,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1452,10 +1452,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1480,10 +1480,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1508,10 +1508,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1536,10 +1536,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1564,10 +1564,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1592,10 +1592,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20767_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1626,10 +1626,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1654,10 +1654,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1682,10 +1682,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1710,10 +1710,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1738,10 +1738,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1766,10 +1766,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1794,10 +1794,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1822,10 +1822,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1850,10 +1850,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1878,10 +1878,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1906,10 +1906,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1934,10 +1934,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1962,10 +1962,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -1990,10 +1990,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -2018,10 +2018,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -2046,10 +2046,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -2074,10 +2074,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
@@ -2102,10 +2102,10 @@
                                                                      src="https://cf.lottecinema.co.kr//Media/MovieFile/MovieImg/202402/20782_103_1.jpg"
                                                                      alt="#">
                                                                 <div>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         상세보기
                                                                     </a>
-                                                                    <a href="movie_details.html">
+                                                                    <a href="/movie/detail/1111">
                                                                         예매하기
                                                                     </a>
                                                                 </div>
