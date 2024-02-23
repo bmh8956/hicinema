@@ -30,11 +30,11 @@ public class TestController {
 //		return "user/theater_detail";
 //	}
 //
-//	@GetMapping("/reservation/ticketing")
-//	public String ticketing(Model model) {
-//		model.addAttribute("title", "예매");
-//		return "user/ticketing";
-//	}
+	@GetMapping("/reservation/ticketing")
+	public String ticketing(Model model) {
+		model.addAttribute("title", "예매");
+		return "user/ticketing";
+	}
 //
 //	@GetMapping("/reservation/seat")
 //	public String seat(Model model) {
