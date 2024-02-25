@@ -2,6 +2,7 @@ package com.himedia.hicinema.movie;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +12,6 @@ public class Movie {
 	@Id
 	@Column(length=10)
 	private String movieCd;
-
-	@Column(unique = true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
 
 	@Column(length=200)
 	private String title;
@@ -61,8 +58,8 @@ public class Movie {
 	// 영화 정보를 크롤링 하면서 +7로 자동 업데이트됨 , 롯데시네마에서 내려간 영화는 업데이트가 안됨
 	private LocalDateTime screenOutDate;
 
-	@Column(length = 1)     //상태 : 기본 : O , 미노출 :  X, 삭제 : D
-	private String status;
+	@Column(length = 1, nullable = false)		//상태 : 기본 : O , 미노출 :  X, 삭제 : D
+	private String status = "O";
 
 
 }

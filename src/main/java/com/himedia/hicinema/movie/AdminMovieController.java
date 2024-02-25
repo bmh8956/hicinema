@@ -1,15 +1,25 @@
 package com.himedia.hicinema.movie;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.himedia.hicinema.Crawling;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/admin/movie")
 public class AdminMovieController {
+	private final MovieService movieService;
 
 	@GetMapping("/theater_list")
 	public String theaterList(Model model) {
@@ -69,6 +79,40 @@ public class AdminMovieController {
 	public String movieDetail(Model model) {
 		model.addAttribute("title", "영화 상세");
 		return "admin/movie/movie_detail";
+	}
+	
+	@GetMapping("/movie_crawling")
+	public String movieCrawling(Model model) {
+		model.addAttribute("title", "영화 리스트 업데이트");
+		return "admin/movie/movie_crawling";
+	}
+
+	@RequestMapping("/crawling/get_info")
+	@ResponseBody
+	public String get_info() throws InterruptedException {
+		log.info("============crawling start==========");
+		String data = Crawling.crawling_movie_list();
+		log.info("============crawling end============");
+//		System.out.println(data);
+		return data;
+	}
+
+	@PostMapping("/crawling/get_details")
+	@ResponseBody
+	public ResponseEntity<String> updateMovie(@RequestBody List<Movie> mvs) throws InterruptedException {
+		JsonArray ja = new JsonArray();
+		Gson gson = new Gson();
+		String data = "";
+		for(Movie mv : mvs) {
+			System.out.println(mv.getMovieCd());
+			Movie movie = Crawling.get_movie(mv);
+			movieService.create(movie);
+			ja.add(mv.getMovieCd());
+		}
+//		JsonObject jo = new JsonObject();
+//		jo.addProperty("msg", "success");
+//		jo.addProperty("list", String.valueOf(ja));
+		return new ResponseEntity<>(ja.toString(), HttpStatus.OK);
 	}
 	
 }
