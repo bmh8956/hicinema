@@ -78,7 +78,7 @@ public class Crawling {
 		EdgeDriver driver = new EdgeDriver(options);
 		driver.get(baseUrl);
 
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		JsonObject jo = new JsonObject();
 
 		String date = extractText(driver.findElement(By.cssSelector(".mov_info1")), "li:first-child span.roboto", "text");

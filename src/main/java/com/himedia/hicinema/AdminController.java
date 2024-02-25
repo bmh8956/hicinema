@@ -21,4 +21,10 @@ public class AdminController {
 	public String index(Model model) {
 		return "redirect:/admin";
 	}
+
+	@GetMapping("/error/505")
+	public String error_505(Model model) {
+		model.addAttribute("title", "error");
+		return "admin/505";
+	}
 }
