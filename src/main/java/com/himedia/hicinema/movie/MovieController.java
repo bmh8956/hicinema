@@ -1,5 +1,6 @@
 package com.himedia.hicinema.movie;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/movie")
+@RequiredArgsConstructor
 public class MovieController {
+
+	private final MovieService movieService;
 
 	@GetMapping("/list")
 	public String getList(Model model, @RequestParam String type) {
@@ -24,6 +28,23 @@ public class MovieController {
 		img_arr.add("/img_nsy/BabyShark.jpg");
 		img_arr.add("/img_nsy/IfOnly_1920774.jpg");
 		model.addAttribute("images", img_arr);
+		MovieSearchDto mv1 = new MovieSearchDto();
+		mv1.setStatus("O");
+		mv1.setType("now");
+		List<Movie> list1 = movieService.getUserMoviePage(mv1);
+		MovieSearchDto mv2 = new MovieSearchDto();
+		mv2.setStatus("O");
+		mv2.setType("soon");
+		List<Movie> list2 = movieService.getUserMoviePage(mv2);
+		MovieSearchDto mv3 = new MovieSearchDto();
+		mv3.setStatus("O");
+		mv3.setType("end");
+		List<Movie> list3 = movieService.getUserMoviePage(mv3);
+
+		model.addAttribute("now", list1);
+		model.addAttribute("soon", list2);
+		model.addAttribute("end", list3);
+
 		return "user/movie_list";
 	}
 
