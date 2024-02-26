@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +22,7 @@ public class Movie {
 
 	//   등급
 	@Column(length=100)
-	private String  rats;
+	private String rats;
 
 	//  상영시간
 	@Column(length=100)
@@ -36,7 +37,7 @@ public class Movie {
 
 	//  장르
 	@Column(length = 100)
-	private String Genre;
+	private String genre;
 
 	@Column(length = 200)
 	private String actors;
@@ -50,6 +51,9 @@ public class Movie {
 	@Column(length = 1000)
 	private String trailerVideo;
 
+	//  개봉일
+	private LocalDateTime release;
+
 	@Column(updatable = false)
 	private LocalDateTime regDate;
 
@@ -61,5 +65,6 @@ public class Movie {
 	@Column(length = 1, nullable = false)		//상태 : 기본 : O , 미노출 :  X, 삭제 : D
 	private String status = "O";
 
-
+	@Column(length = 1)       //크롤링여부 : 일반등록:N 크롤링:Y
+	private String isCrawling;
 }

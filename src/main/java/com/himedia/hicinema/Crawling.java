@@ -10,7 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,8 +122,13 @@ public class Crawling {
 			ja_stl.add(extractText(stl, "a img", "src"));
 		}
 
+		date = date + " 00:00:00";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+		System.out.println(date);
+		LocalDateTime release = LocalDateTime.parse(date, formatter);
+
 		jo.addProperty("title", movie.getTitle());
-		jo.addProperty("date", date);
+		jo.addProperty("date", String.valueOf(release));
 		jo.addProperty("runTime", runTime);
 		jo.addProperty("rats", rats);
 		jo.addProperty("content", content);
@@ -136,6 +143,7 @@ public class Crawling {
 		System.out.println(jo);
 //		Movie movie = new Movie();
 		movie.setMovieCd(movieCd);
+		movie.setRelease(release);
 		movie.setRats(rats);
 		movie.setContent(content);
 		movie.setRuntime(runTime);
@@ -148,6 +156,7 @@ public class Crawling {
 		movie.setTrailerVideo(trailer_vid);
 		movie.setRegDate(LocalDateTime.now());
 		movie.setScreenOutDate(LocalDateTime.now().plus(7, ChronoUnit.DAYS));
+		movie.setIsCrawling("Y");
 
 		return movie;
 	}

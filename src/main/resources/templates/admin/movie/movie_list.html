@@ -9,12 +9,26 @@
             text-align: center;
         }
 
-        .screen-type code{
+        td a.movie_detail {
+            display: -webkit-box;
+            word-wrap: break-word;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-decoration: none;
+        }
+
+        .screen-type code {
             cursor: pointer;
         }
 
         .screen-type code:hover, .screen-type code.active {
             border-bottom: 1px solid #e83e8c;
+        }
+
+        #pagination a{
+            cursor: pointer;
         }
     </style>
 </th:block>
@@ -56,19 +70,28 @@
                                            style="float: right">영화 추가</a>
                                     </div>
                                 </div>
-                                <form>
+                                <form method="get" id="frm">
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect3">장르</label>
                                                 <select class="form-control form-control-sm"
-                                                        id="exampleFormControlSelect3">
-                                                    <option>전체</option>
+                                                        id="exampleFormControlSelect3" name="genre">
+                                                    <option value="">전체</option>
                                                     <option>액션</option>
                                                     <option>판타지</option>
+                                                    <option>어드벤쳐</option>
                                                     <option>드라마</option>
                                                     <option>스릴러</option>
                                                     <option>공포</option>
+                                                    <option>범죄</option>
+                                                    <option>멜로</option>
+                                                    <option>로맨스</option>
+                                                    <option>다큐멘터리</option>
+                                                    <option>미스터리</option>
+                                                    <option>코미디</option>
+                                                    <option>애니메이션</option>
+                                                    <option>기타</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -76,7 +99,7 @@
                                             <div class="form-group">
                                                 <label for="exampleInputUsername1">영화 제목</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1"
-                                                       placeholder="Username">
+                                                       placeholder="Username" name="title">
                                             </div>
                                         </div>
                                         <div class="col-lg-2" style="align-self: center;">
@@ -101,26 +124,28 @@
                                         <th width="10%">개봉일</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>판타지, 드라마 / 미국</td>
-                                        <td class="text-primary"><a href="/admin/movie/movie_detail">웡카</a></td>
-                                        <td>전체관람가</td>
-                                        <td>116</td>
-                                        <td>2024.01.31</td>
+                                    <tbody id="list">
+                                    <!--                                    <tr>-->
+                                    <!--                                        <td>-->
+                                    <!--                                            <input type="checkbox">-->
+                                    <!--                                        </td>-->
+                                    <!--                                        <td>1</td>-->
+                                    <!--                                        <td>판타지, 드라마 / 미국</td>-->
+                                    <!--                                        <td class="text-primary"><a href="/admin/movie/movie_detail">웡카</a></td>-->
+                                    <!--                                        <td>전체관람가</td>-->
+                                    <!--                                        <td>116</td>-->
+                                    <!--                                        <td>2024.01.31</td>-->
+                                    <!--                                    </tr>-->
                                     </tbody>
                                 </table>
                                 <div class="pagination-area" style="text-align: center">
-                                    <ul class="pagination" style="display: inline-flex; padding-top: 5%">
-                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    <ul class="pagination" style="display: inline-flex; padding-top: 5%"
+                                        id="pagination">
+<!--                                                                                <li class="page-item"><a class="page-link" href="#">Prev</a></li>-->
+<!--                                                                                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                                                                                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                                                                                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                                                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -134,19 +159,142 @@
 </div>
 
 <th:block layout:fragment="script">
-<script>
-    let code = document.querySelectorAll(".screen-type code")
-    let current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
-    for(let c of code) {
-        let cur_code = c.dataset.link.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
-        if(cur_code === current) {
-            c.classList.add("active");
+    <script>
+        let code = document.querySelectorAll(".screen-type code")
+        let current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+        for (let c of code) {
+            let cur_code = c.dataset.link.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+            if (cur_code === current) {
+                c.classList.add("active");
+            }
+            c.onclick = () => {
+                location.href = c.dataset.link;
+            }
         }
-        c.onclick = () => {
-            location.href = c.dataset.link;
+
+        let get_list = (page) => {
+            let frm = new FormData(document.getElementById("frm"))
+            document.querySelector(".all_check").checked = false;
+            frm.append("status", "O");
+            frm.append("page", page);
+            frm.append("type", "now")
+            let obj = {}
+            for (let f of frm.keys()) {
+                obj[f] = frm.get(f);
+            }
+            console.log(obj)
+            let html = "";
+            $.ajax({
+                type: "get",
+                url: "/admin/movie/list/get",
+                data: obj,
+                // dataType: "application/json", // 서버에서 반환되는 데이터 형식
+                // processData:false, // 멀티파트폼으로 보내기위해서 설정
+                // contentType:false, // 멀티파트폼으로 보내기위해서 설정
+                // async: true, // 기본값true
+                success: async function (res) {
+                    console.log("result : ")
+                    if (typeof res === 'string') {
+                        res = JSON.parse(JSON.parse(res))
+                    }
+                    console.log(res)
+                    if (res.empty === false) {
+                        let tbody = document.getElementById("list");
+                        for (let mv of res.content) {
+                            html += '<tr>' +
+                                '<td>' +
+                                '<input type="checkbox" class="movieCd" value="'+ mv.movieCd +'">' +
+                                '</td>' +
+                                '<td>1</td>' +
+                                '<td>' + mv.genre + '</td>' +
+                                '<td class="text-primary"><a href="/admin/movie/movie_detail?movieCd='+ mv.movieCd +'" class="movie_detail">' + mv.title + '</a></td>' +
+                                '<td>' + mv.rats + '</td>' +
+                                '<td>' + mv.runtime + '</td>' +
+                                '<td>' + mv.release + '</td>' +
+                                '</tr>'
+                        }
+                        tbody.innerHTML = html;
+                    } else {
+                        let tbody = document.getElementById("list");
+                        html = "<td colspan='7'>등록된 영화가 없습니다.</td>";
+                        tbody.innerHTML = html;
+                    }
+                    await paging(res.totalElements, page + 1, 5, 5);
+                }
+            });
         }
-    }
-</script>
+
+        function paging(total, current, dataPerPage, pageCount) {
+            let totalPage = Math.ceil(total / dataPerPage);
+            let pageGroup = Math.ceil(current / pageCount);
+
+            let last = pageGroup * pageCount;
+            let first = last - (pageCount - 1)
+            if (last > totalPage) {
+                last = totalPage;
+            }
+            let next = last + 1;
+            let prev = first - 1;
+
+            if (totalPage < 1) {
+                first = last;
+            }
+
+            let pages = document.getElementById("pagination");
+            pages.innerHTML = '';
+
+            let aaaa = '<li class="page-item"><a class="page-link" href="#">Prev</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">1</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">2</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">3</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">Next</a></li>'
+
+            if (first > pageCount) {
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + 0 + ',' + dataPerPage + ')"><<</></li>';
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (prev-1) + ',' + dataPerPage + ')"><</></li>';
+            }
+
+            for (let i = first; i <= last; i++) {
+                if (current == i) {
+                    pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (i-1) + ',' + dataPerPage + ')">' + i + '</></li>';
+                } else if (i > 0) {
+                    pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (i-1) + ',' + dataPerPage + ')">' + i + '</></li>';
+                }
+            }
+
+            if (next > pageCount && next <= totalPage) {
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (next-1) + ',' + dataPerPage + ')">></></li>';
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (totalPage-1) + ',' + dataPerPage + ')">>></></li>';
+            }
+
+            let li = document.getElementsByClassName("page-item");
+            for (let l of li) {
+                if(l.textContent == current) {
+                    l.classList.add("active")
+                } else {
+                    l.classList.remove("active")
+                }
+            }
+
+            // console.log("current : " + current)
+            // console.log("total : " + total)
+            // console.log("pageGroup : " + pageGroup)
+            // console.log("totalPage : " + totalPage)
+            console.log("last : " + last)
+            console.log("first : " + first)
+            console.log("prev : " + prev)
+            console.log("next : " + next)
+        }
+
+        window.onload = () => {
+            let frm = document.getElementById("frm")
+            frm.onsubmit = (e) => {
+                e.preventDefault();
+                get_list(0);
+            }
+            get_list(0)
+        }
+    </script>
 </th:block>
 
 </html>
