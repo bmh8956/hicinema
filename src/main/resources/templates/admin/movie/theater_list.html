@@ -47,12 +47,8 @@
                                                 <label for="exampleFormControlSelect3">지역</label>
                                                 <select class="form-control form-control-sm"
                                                         id="exampleFormControlSelect3">
-                                                    <option>전체</option>
-                                                    <option>서울</option>
-                                                    <option>인천/경기</option>
-                                                    <option>충천/대전</option>
-                                                    <option>강원</option>
-                                                    <option>제주</option>
+                                                    <option value="">전체</option>
+                                                    <option th:each="loc:${locList}" th:text="${loc.name}"></option>
                                                 </select>
                                             </div>
                                         </div>

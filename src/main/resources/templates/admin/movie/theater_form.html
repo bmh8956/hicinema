@@ -3,6 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layouts/layout_admin}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css">
 
 </th:block>
@@ -20,7 +25,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">영화관 이름</h4>
-                                <form class="form-sample">
+                                <form class="form-sample" id="frm">
                                     <p class="card-description">
                                         상세정보
                                     </p>
@@ -29,10 +34,10 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">지역</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control">
-                                                        <option>서울</option>
-                                                        <option>인천/경기</option>
-                                                        <option>강원</option>
+                                                    <select class="form-control" name="loc_id">
+                                                        <option th:each="loc:${locList}" th:value="${loc.id}">
+                                                            [[${loc.name}]]
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -43,7 +48,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">영화관 명</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control"/>
+                                                    <input type="text" class="form-control" name="name">
                                                 </div>
                                             </div>
                                         </div>
@@ -54,7 +59,7 @@
                                                 <label class="col-sm-3 col-form-label">우편번호</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="addr1" readonly
-                                                           onclick="sample2_execDaumPostcode()">
+                                                           onclick="sample2_execDaumPostcode()" name="zipcode">
                                                 </div>
                                             </div>
                                         </div>
@@ -65,7 +70,7 @@
                                                 <label class="col-sm-3 col-form-label">주소</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="addr2" readonly
-                                                           onclick="sample2_execDaumPostcode()">
+                                                           onclick="sample2_execDaumPostcode()" name="addr">
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +80,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">상세주소</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="addr3"/>
+                                                    <input type="text" class="form-control" id="addr3"
+                                                           name="addr_detail"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +91,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">참고</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="addr4" readonly>
+                                                    <input type="text" class="form-control" id="addr4" readonly
+                                                           name="addr_ref">
                                                 </div>
                                             </div>
                                         </div>
@@ -94,14 +101,16 @@
                                         <div class="col-md-12">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">이미지</label>
-                                                <input type="file" name="img[]" class="file-upload-default" multiple="">
+                                                <input type="file" name="img" class="file-upload-default" id="img">
                                                 <div class="input-group col-sm-9">
                                                     <input type="text"
                                                            class="form-control form-control-lg file-upload-info"
-                                                           disabled="" placeholder="Upload Image" multiple="">
+                                                           disabled="" placeholder="Upload Image" multiple=""
+                                                           id="file_name">
                                                     <span class="input-group-append">
                                                       <button class="file-upload-browse btn btn-gradient-primary"
-                                                              type="button" style="height: 73%">Upload</button>
+                                                              type="button" style="height: 73%"
+                                                              onclick="document.getElementById('img').click();">Upload</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -111,13 +120,13 @@
                                         <div class="col-md-12 thumbnail-box">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label"></label>
-                                                <div class="col-sm-9">
-                                                    <img src="https://cf.lottecinema.co.kr//Media/Event/1fa4c12645054dbbb5148917531ac456.jpg"
-                                                         alt="" srcset="">
-                                                    <button type="button"
-                                                            class="btn btn-outline-secondary btn-rounded btn-icon text-danger">
-                                                        x
-                                                    </button>
+                                                <div class="col-sm-9" id="thumb">
+<!--                                                    <img src="https://cf.lottecinema.co.kr//Media/Event/1fa4c12645054dbbb5148917531ac456.jpg"-->
+<!--                                                         alt="" srcset="">-->
+<!--                                                    <button type="button"-->
+<!--                                                            class="btn btn-outline-secondary btn-rounded btn-icon text-danger">-->
+<!--                                                        x-->
+<!--                                                    </button>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -127,7 +136,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">공지</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control" id="exampleTextarea1" rows="4">
+                                                    <textarea class="form-control" id="exampleTextarea1" rows="4"
+                                                              name="content">
 
                                                     </textarea>
                                                 </div>
@@ -193,9 +203,11 @@
                         </div>
                     </div>
                 </div>
-                <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+                <div id="layer"
+                     style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
                     <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer"
-                         style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()"
+                         style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1"
+                         onclick="closeDaumPostcode()"
                          alt="닫기 버튼">
                 </div>
             </div>
@@ -295,6 +307,79 @@
             // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
             element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
             element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+        }
+    </script>
+    <script>
+
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+
+        let save = (tag) => {
+            let frm = new FormData(tag);
+            let obj = {}
+            let exc = ['content', 'addr_ref', 'addr_detail']
+            for (let k of frm.keys()) {
+                if(exc.indexOf(k) === -1 && !frm.get(k)) {
+                    alert("값을 확인해주세요");
+                    document.querySelector("[name="+ k +"]").focus();
+                    console.log(document.querySelector("[name="+ k +"]"))
+                    return
+                }
+                obj[k] = frm.get(k);
+            }
+            console.log(obj)
+            $.ajax({
+                type: "post",
+                url: "/admin/movie/theater/post",
+                data: frm,
+                contentType: "application/json",
+                beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                // dataType: "dataType", // 서버에서 반환되는 데이터 형식
+                processData: false, // 멀티파트폼으로 보내기위해서 설정
+                contentType: false, // 멀티파트폼으로 보내기위해서 설정
+                success: function (res) {
+                    console.log(res)
+                }
+            });
+        }
+
+        let thumb = (e) => {
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                // let tm = document.querySelector(".thumbn")
+                // tm.style.backgroundImage = 'url(' + e.target.result + ')';
+                let thumb = document.getElementById("thumb")
+                let div = document.createElement("div")
+                let img = document.createElement("img")
+                let button = document.createElement("button")
+                button.class = 'btn btn-outline-secondary btn-rounded btn-icon text-danger';
+                button.setAttribute("class", 'btn btn-outline-secondary btn-rounded btn-icon text-danger');
+                button.textContent = 'X';
+                img.src = e.target.result;
+                img.style.width = '300px';
+                div.append(img)
+                div.append(button)
+                thumb.append(div);
+            }
+            reader.readAsDataURL(e.target.files[0])
+        }
+
+        window.onload = () => {
+            document.getElementById("frm").onsubmit = (e) => {
+                e.preventDefault();
+                save(e.target);
+            }
+
+            document.getElementById("img").onchange = (e) => {
+                let files = e.target.files[0]
+                console.log(files)
+                document.getElementById("file_name").value = files.name;
+                thumb(e)
+            }
         }
     </script>
 </th:block>
