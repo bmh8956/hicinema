@@ -24,7 +24,7 @@ public class TestController {
 //		return "user/movie_detail";
 //	}
 //
-//	@GetMapping("/theater/detail")
+//	@GetMapping("/Theater/detail")
 //	public String theater_detail(Model model) {
 //		model.addAttribute("title", "영화관 상세");
 //		return "user/theater_detail";

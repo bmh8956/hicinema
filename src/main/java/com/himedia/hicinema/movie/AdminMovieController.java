@@ -8,6 +8,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.himedia.hicinema.Crawling;
+import com.himedia.hicinema.movie.loc.Location;
+import com.himedia.hicinema.movie.loc.LocationService;
+import com.himedia.hicinema.movie.theater.Theater;
+import com.himedia.hicinema.movie.theater.TheaterForm;
+import com.himedia.hicinema.movie.theater.TheaterRepository;
+import com.himedia.hicinema.movie.theater.TheaterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +25,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +36,15 @@ import java.util.Optional;
 @RequestMapping("/admin/movie")
 public class AdminMovieController {
 	private final MovieService movieService;
+	private final LocationService locationService;
+	private final TheaterService theaterService;
 
 	@GetMapping("/theater_list")
 	public String theaterList(Model model) {
 		model.addAttribute("title", "영화관 리스트");
+
+		List<Location> loc_list = locationService.getList("O");
+		model.addAttribute("locList", loc_list);
 		return "admin/movie/theater_list";
 	}
 
@@ -42,16 +54,85 @@ public class AdminMovieController {
 		return "admin/movie/loc_list";
 	}
 
+	@GetMapping("/loc_list/get")
+	public ResponseEntity<String> locGetList() throws JsonProcessingException {
+		JsonArray ja = new JsonArray();
+		List<Location> list = locationService.getList("O");
+		ObjectMapper om = new ObjectMapper();
+		String json = om.writeValueAsString(list);
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+
+	@PostMapping("/loc/post")
+	@ResponseBody
+	public ResponseEntity<String> locInsert(String name) {
+		System.out.println(name);
+		Location loc = new Location();
+		loc.setName(name);
+
+		JsonObject json = new JsonObject();
+		try {
+			locationService.create(loc);
+			json.addProperty("msg", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.addProperty("msg", "error");
+		}
+		return new ResponseEntity<>(json.toString(), HttpStatus.OK);
+	}
+
+	@PostMapping("/loc/delete")
+	@ResponseBody
+	public ResponseEntity<String> locDelete(Location loc) {
+
+		JsonObject json = new JsonObject();
+		loc.setStatus("X");
+		try {
+			locationService.delete(loc);
+			json.addProperty("msg", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.addProperty("msg", "error");
+		}
+
+		return new ResponseEntity<>(json.toString(), HttpStatus.OK);
+	}
+
 	@GetMapping("/theater_detail")
 	public String theaterDetail(Model model) {
 		model.addAttribute("title", "영화관 상세");
+
+		List<Location> loc_list = locationService.getList("O");
+		model.addAttribute("locList", loc_list);
 		return "admin/movie/theater_detail";
 	}
 
 	@GetMapping("/theater_form")
 	public String theaterForm(Model model) {
 		model.addAttribute("title", "영화관 등록");
+
+		List<Location> loc_list = locationService.getList("O");
+		model.addAttribute("locList", loc_list);
 		return "admin/movie/theater_form";
+	}
+
+	@PostMapping("/theater/post")
+	@ResponseBody
+	public ResponseEntity<String> theaterNew(TheaterForm th, @RequestParam("img") List<MultipartFile> fileList) {
+		JsonObject json = new JsonObject();
+//		System.out.println(th);
+//		System.out.println(fileList);
+		try {
+			theaterService.saveTheater(th, fileList);
+			json.addProperty("msg", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.addProperty("msg", "fail");
+		}
+
+
+		return new ResponseEntity<>(json.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/theater_screen")

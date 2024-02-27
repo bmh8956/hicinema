@@ -31,5 +31,4 @@ public class MovieService {
 	public List<Movie> getUserMoviePage(MovieSearchDto mv) {
 		return mvRepository.getUserMoviePage(mv);
 	}
-
 }
