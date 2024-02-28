@@ -10,12 +10,14 @@ import com.google.gson.JsonObject;
 import com.himedia.hicinema.Crawling;
 import com.himedia.hicinema.movie.loc.Location;
 import com.himedia.hicinema.movie.loc.LocationService;
-import com.himedia.hicinema.movie.theater.Theater;
-import com.himedia.hicinema.movie.theater.TheaterForm;
-import com.himedia.hicinema.movie.theater.TheaterRepository;
-import com.himedia.hicinema.movie.theater.TheaterService;
+import com.himedia.hicinema.movie.theater.*;
+import com.himedia.hicinema.upload.FileService;
+import com.himedia.hicinema.upload.FileUploadService;
+import com.himedia.hicinema.upload.UploadFiles;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,14 +40,49 @@ public class AdminMovieController {
 	private final MovieService movieService;
 	private final LocationService locationService;
 	private final TheaterService theaterService;
+	private final FileUploadService fileService;
+
+	@Autowired
+	private HttpServletRequest request;
 
 	@GetMapping("/theater_list")
-	public String theaterList(Model model) {
+	public String theaterList(Model model, TheaterSearchDto tsd, @RequestParam Optional<Integer> page) throws JsonProcessingException {
 		model.addAttribute("title", "영화관 리스트");
 
 		List<Location> loc_list = locationService.getList("O");
+//		tsd.setStatus("O");
+//		System.out.println(tsd);
+//		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 3, 5);
+//		Page<TheaterList> theaters = theaterService.getAdminTheaterList(tsd, pageable);
+//
+//		model.addAttribute("theaters", theaters);
+//		model.addAttribute("tsd", tsd);
+//		model.addAttribute("maxPage", 5);
+//		model.addAttribute("httpServletRequest", request);
+//
+//		ObjectMapper om = new ObjectMapper();
+//		om.registerModule(new JavaTimeModule());
+//		String json = om.writeValueAsString(theaters);
+//		System.out.println(json);
+
 		model.addAttribute("locList", loc_list);
 		return "admin/movie/theater_list";
+	}
+
+	@GetMapping("/theater/list")
+	@ResponseBody
+	public ResponseEntity<String> getTheaterList(TheaterSearchDto tsd) throws JsonProcessingException {
+		JsonArray ja = new JsonArray();
+		Pageable pageable = PageRequest.of(tsd.getPage().isPresent() ? tsd.getPage().get() : 0, 5);
+		Page<TheaterList> theaters = theaterService.getAdminTheaterList(tsd, pageable);
+
+		ObjectMapper om = new ObjectMapper();
+		om.registerModule(new JavaTimeModule());
+		String json = om.writeValueAsString(theaters);
+		log.info(json);
+		ja.add(json);
+
+		return new ResponseEntity<>(ja.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/loc_list")
@@ -100,11 +137,21 @@ public class AdminMovieController {
 	}
 
 	@GetMapping("/theater_detail")
-	public String theaterDetail(Model model) {
+	public String theaterDetail(Model model, Long id) {
 		model.addAttribute("title", "영화관 상세");
-
+		Theater theater = new Theater();
+		UploadFiles files = new UploadFiles();
+		try {
+			theater = theaterService.getDetail(id);
+			files = fileService.getFiles(theater);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		List<Location> loc_list = locationService.getList("O");
 		model.addAttribute("locList", loc_list);
+		model.addAttribute("theater", theater);
+		model.addAttribute("file", files);
+		System.out.println(theater);
 		return "admin/movie/theater_detail";
 	}
 

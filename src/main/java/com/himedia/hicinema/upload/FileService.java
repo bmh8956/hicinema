@@ -9,7 +9,8 @@ import java.util.UUID;
 
 @Service
 @Log
-public class FileService {			//실제 업로드된 파일을 물리적인 경로에 저장
+public class FileService {
+	//실제 업로드된 파일을 물리적인 경로에 저장
 
 	// 원본 업로드위치(C:\shop\item), 원본 이미지이름, 바이트 스트림(jpg)을 인풋 받아서 UUID.jpg 를 리턴
 	public String uploadFile(String uploadPath, String originalFileName, byte[] fileData) throws Exception{

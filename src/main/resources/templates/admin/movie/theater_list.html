@@ -4,7 +4,11 @@
       layout:decorate="~{/layouts/layout_admin}">
 
 <th:block layout:fragment="css">
-
+    <style>
+        #pagination a {
+            cursor: pointer;
+        }
+    </style>
 </th:block>
 
 <div class="container-scroller">
@@ -40,13 +44,13 @@
                                            style="float: right">영화관 추가</a>
                                     </div>
                                 </div>
-                                <form>
+                                <form th:action="@{/admin/movie/theater_list}" method="get" id="frm">
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect3">지역</label>
                                                 <select class="form-control form-control-sm"
-                                                        id="exampleFormControlSelect3">
+                                                        id="exampleFormControlSelect3" name="loc_id">
                                                     <option value="">전체</option>
                                                     <option th:each="loc:${locList}" th:text="${loc.name}"></option>
                                                 </select>
@@ -56,7 +60,7 @@
                                             <div class="form-group">
                                                 <label for="exampleInputUsername1">영화관 명</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1"
-                                                       placeholder="Username">
+                                                       placeholder="Username" name="name">
                                             </div>
                                         </div>
                                         <div class="col-lg-2" style="align-self: center;">
@@ -78,63 +82,18 @@
                                         <th width="25%">영화관</th>
                                         <th width="30%">주소</th>
                                         <th width="10%">총 상영관수</th>
-                                        <th width="10%">총 좌석수</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="list">
                                     <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/movie/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/movie/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/movie/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                        </td>
-                                        <td>1</td>
-                                        <td>서울</td>
-                                        <td class="text-primary"><a href="/admin/movie/theater_detail">수유</a></td>
-                                        <td>서울 강북구 도봉로 308 (번동)</td>
-                                        <td>6개관</td>
-                                        <td>852석</td>
+                                        <td colspan="6">등록된 영화관이 없습니다.</td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 <div class="pagination-area" style="text-align: center">
-                                    <ul class="pagination" style="display: inline-flex; padding-top: 5%">
-                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    <ul class="pagination" style="display: inline-flex; padding-top: 5%"
+                                        id="pagination">
+
                                     </ul>
                                 </div>
                             </div>
@@ -148,7 +107,110 @@
 </div>
 
 <th:block layout:fragment="script">
+    <script>
 
+        let get_list = (page) => {
+            let frm = new FormData(document.getElementById("frm"));
+            document.querySelector(".all_check").checked = false;
+            frm.append("status", "O");
+            frm.append("page", page);
+            let obj = {}
+            for (let f of frm.keys()) {
+                obj[f] = frm.get(f);
+            }
+            console.log(obj)
+            let html = "";
+            $.ajax({
+                type: "get",
+                url: "/admin/movie/theater/list",
+                data: obj,
+                success: async function (res) {
+                    if (typeof res === 'string') {
+                        res = JSON.parse(JSON.parse(res))
+                    }
+                    console.log(res)
+                    let tbody = document.getElementById("list");
+                    if (res.empty === false) {
+                        let index = 0;
+                        for (let tht of res.content) {
+                            html +=
+                                '<tr>' +
+                                '<td><input type="checkbox" name=""></td>' +
+                                '<td>' + (index + Number(res.number) * Number(res.size) + 1) + '</td>' +
+                                '<td>' + tht.location.name + '</td>' +
+                                '<td><a href="/admin/movie/theater_detail?id='+ tht.id +'">' + tht.name + '</a></td>' +
+                                '<td>' + tht.addr + '</td>' +
+                                '<td>' + tht.screenCount + '</td>' +
+                                '</tr>'
+                            index++;
+                        }
+                        tbody.innerHTML = html;
+                    } else {
+                        html = "<td colspan='6'>등록된 영화관이 없습니다.</td>";
+                        tbody.innerHTML = html;
+                    }
+                    await paging(res.totalElements, page + 1, 5, 5);
+                }
+            });
+        }
+
+        function paging(total, current, dataPerPage, pageCount) {
+            let totalPage = Math.ceil(total / dataPerPage);
+            let pageGroup = Math.ceil(current / pageCount);
+
+            let last = pageGroup * pageCount;
+            let first = last - (pageCount - 1)
+            if (last > totalPage) {
+                last = totalPage;
+            }
+            let next = last + 1;
+            let prev = first - 1;
+
+            if (totalPage < 1) {
+                first = last;
+            }
+
+            let pages = document.getElementById("pagination");
+            pages.innerHTML = '';
+
+            let aaaa = '<li class="page-item"><a class="page-link" href="#">Prev</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">1</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">2</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">3</a></li>\n' +
+                '<li class="page-item"><a class="page-link" href="#">Next</a></li>'
+
+            if (first > pageCount) {
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + 0 + ',' + dataPerPage + ')"><<</></li>';
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (prev - 1) + ',' + dataPerPage + ')"><</></li>';
+            }
+
+            for (let i = first; i <= last; i++) {
+                if (current == i) {
+                    pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (i - 1) + ',' + dataPerPage + ')">' + i + '</></li>';
+                } else if (i > 0) {
+                    pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (i - 1) + ',' + dataPerPage + ')">' + i + '</></li>';
+                }
+            }
+
+            if (next > pageCount && next <= totalPage) {
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (next - 1) + ',' + dataPerPage + ')">></></li>';
+                pages.innerHTML += '<li class="page-item"><a class="page-link" onclick="get_list(' + (totalPage - 1) + ',' + dataPerPage + ')">>></></li>';
+            }
+
+            let li = document.getElementsByClassName("page-item");
+            for (let l of li) {
+                if (l.textContent == current) {
+                    l.classList.add("active")
+                } else {
+                    l.classList.remove("active")
+                }
+            }
+        }
+
+        window.onload = () => {
+            get_list(0);
+        }
+    </script>
 </th:block>
 
 </body>
