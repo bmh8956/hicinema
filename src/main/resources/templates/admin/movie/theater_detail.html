@@ -39,9 +39,7 @@
                                                 <label class="col-sm-3 col-form-label">지역</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control">
-                                                        <option>서울</option>
-                                                        <option>인천/경기</option>
-                                                        <option>강원</option>
+                                                        <option th:each="loc:${locList}" th:value="${loc.id}" th:text="${loc.name}" th:selected="${loc.id == theater.location.id}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -52,7 +50,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">영화관 명</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control"/>
+                                                    <input type="text" class="form-control" th:field="${theater.name}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -63,7 +61,7 @@
                                                 <label class="col-sm-3 col-form-label">우편번호</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="addr1" readonly
-                                                           onclick="sample2_execDaumPostcode()">
+                                                           onclick="sample2_execDaumPostcode()" th:field="${theater.zipcode}">
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +72,7 @@
                                                 <label class="col-sm-3 col-form-label">주소</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="addr2" readonly
-                                                           onclick="sample2_execDaumPostcode()">
+                                                           onclick="sample2_execDaumPostcode()" th:field="${theater.addr}">
                                                 </div>
                                             </div>
                                         </div>
@@ -84,7 +82,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">상세주소</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="addr3"/>
+                                                    <input type="text" class="form-control" id="addr3" th:field="${theater.addr_detail}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,7 +92,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">참고</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="addr4" readonly>
+                                                    <input type="text" class="form-control" id="addr4" readonly th:field="${theater.addr_ref}">
                                                 </div>
                                             </div>
                                         </div>
@@ -103,14 +101,14 @@
                                         <div class="col-md-12">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">이미지</label>
-                                                <input type="file" name="img[]" class="file-upload-default" multiple="">
+                                                <input type="file" name="img[]" class="file-upload-default" id="img">
                                                 <div class="input-group col-sm-9">
                                                     <input type="text"
                                                            class="form-control form-control-lg file-upload-info"
-                                                           disabled="" placeholder="Upload Image" multiple="">
+                                                           disabled="" placeholder="Upload Image" th:value="${file.oriImgName}">
                                                     <span class="input-group-append">
                                                       <button class="file-upload-browse btn btn-gradient-primary"
-                                                              type="button" style="height: 73%">Upload</button>
+                                                              type="button" style="height: 73%" onclick="document.getElementById('img').click();">Upload</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -121,7 +119,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label"></label>
                                                 <div class="col-sm-9">
-                                                    <img src="https://cf.lottecinema.co.kr//Media/Event/1fa4c12645054dbbb5148917531ac456.jpg"
+                                                    <img th:src="${file.imgUrl}" width="300px"
                                                          alt="" srcset="">
                                                     <button type="button"
                                                             class="btn btn-outline-secondary btn-rounded btn-icon text-danger">
@@ -136,7 +134,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">공지</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control" id="exampleTextarea1" rows="4">
+                                                    <textarea class="form-control" id="exampleTextarea1" rows="4" th:field="${theater.content}">
 
                                                     </textarea>
                                                 </div>
@@ -305,6 +303,11 @@
             element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
             element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
         }
+    </script>
+    <script>
+
+
+        console.log(file)
     </script>
 </th:block>
 </body>

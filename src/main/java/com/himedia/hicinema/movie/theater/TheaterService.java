@@ -5,13 +5,18 @@ import com.himedia.hicinema.upload.FileRepository;
 import com.himedia.hicinema.upload.FileUploadService;
 import com.himedia.hicinema.upload.UploadFiles;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class TheaterService {
@@ -36,7 +41,16 @@ public class TheaterService {
 		Theater theater = tf.createTheater();
 		theater.setFile_id(String.join(", ", fileIdList));
 		theater.setLocation(locationRepository.findById(tf.getLoc_id()).get());
-		System.out.println(theater);
+		theater.setRegDate(LocalDateTime.now());
+//		System.out.println(theater);
 		theaterRepository.save(theater);
+	}
+
+	public Page<TheaterList> getAdminTheaterList(TheaterSearchDto tsd, Pageable pageable) {
+		return theaterRepository.getAdminTheaterList(tsd, pageable);
+	}
+
+	public Theater getDetail(Long id) {
+		return theaterRepository.findById(id).get();
 	}
 }

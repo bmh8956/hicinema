@@ -1,5 +1,6 @@
 package com.himedia.hicinema.upload;
 
+import com.himedia.hicinema.movie.theater.Theater;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -67,4 +68,8 @@ public class FileUploadService {
 ////			savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
 //		}
 //	}
+
+	public UploadFiles getFiles(Theater theater) {
+		return fileRepository.findById(Long.valueOf(theater.getFile_id())).get();
+	}
 }
