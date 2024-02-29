@@ -41,7 +41,10 @@ dependencies {
 
 	// JUnit Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+	
+	// JUnit security Test
+	testImplementation 'org.springframework.security:spring-security-test'
+	
 	// JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 

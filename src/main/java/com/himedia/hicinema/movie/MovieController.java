@@ -16,6 +16,7 @@ public class MovieController {
 
 	@GetMapping("/list")
 	public String getList(Model model, @RequestParam String type) {
+		System.out.println("type 변수 값 출력 : "  + type);
 		model.addAttribute("title", "Movie");
 		model.addAttribute("type", type);
 

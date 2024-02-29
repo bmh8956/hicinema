@@ -22,7 +22,7 @@
 
     <!-- StyleSheet -->
     <!--    <link rel="stylesheet" th:href="@{/css/header_white.css}" />-->
-        <link rel="stylesheet" th:href="@{/css/header_main.css}" />
+        <link rel="stylesheet" th:href="@{/css/header_white.css}" />
     <link rel="stylesheet" th:href="@{/css/header_sticky.css}" />
     <link rel="stylesheet" th:href="@{/css/footer.css}" />
     <!-- Bootstrap -->
@@ -89,13 +89,13 @@
 </head>
 <body>
 
-<div th:replace="fragments/header::header"></div>
+<div th:replace=~{fragments/header::header}></div>
 
 <div layout:fragment="content" class="content">
 
 </div>
 
-<div th:replace="fragments/footer::footer"></div>
+<div th:replace="~{fragments/footer::footer}"></div>
 
 <!-- Jquery -->
 <script th:src="@{/js/jquery.min.js}"></script>
