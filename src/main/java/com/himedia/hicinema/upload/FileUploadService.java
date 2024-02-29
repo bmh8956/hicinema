@@ -72,4 +72,8 @@ public class FileUploadService {
 	public UploadFiles getFiles(Theater theater) {
 		return fileRepository.findById(Long.valueOf(theater.getFile_id())).get();
 	}
+
+	public UploadFiles getFile(String file_id) {
+		return fileRepository.findById(Long.valueOf(file_id)).get();
+	}
 }

@@ -5,13 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.himedia.hicinema.Crawling;
+import com.himedia.hicinema.movie.Screen.Screen;
+import com.himedia.hicinema.movie.Screen.ScreenService;
 import com.himedia.hicinema.movie.loc.Location;
 import com.himedia.hicinema.movie.loc.LocationService;
+import com.himedia.hicinema.movie.schedule.Schedule;
+import com.himedia.hicinema.movie.schedule.ScheduleService;
+import com.himedia.hicinema.movie.seat.SeatService;
 import com.himedia.hicinema.movie.theater.*;
-import com.himedia.hicinema.upload.FileService;
 import com.himedia.hicinema.upload.FileUploadService;
 import com.himedia.hicinema.upload.UploadFiles;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +32,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -41,6 +49,9 @@ public class AdminMovieController {
 	private final LocationService locationService;
 	private final TheaterService theaterService;
 	private final FileUploadService fileService;
+	private final ScreenService screenService;
+	private final ScheduleService scheduleService;
+	private final SeatService seatService;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -155,6 +166,68 @@ public class AdminMovieController {
 		return "admin/movie/theater_detail";
 	}
 
+	@GetMapping("/theater/screen/get")
+	@ResponseBody
+	public ResponseEntity<String> getScreen(Theater theater) throws JsonProcessingException {
+//		System.out.println(theater);
+		JsonObject jo = new JsonObject();
+		try {
+			Theater tht = theaterService.getDetail(theater.getId());
+			List<Screen> screens = screenService.getScreenList(tht, "O");
+			for(Screen sc : screens) {
+				sc.setTheater(null);
+			}
+			ObjectMapper om = new ObjectMapper();
+			om.registerModule(new JavaTimeModule());
+			String json = om.writeValueAsString(screens);
+			jo.addProperty("list", json);
+			if(screens.size() > 0) {
+				jo.addProperty("msg", "success");
+			} else {
+				jo.addProperty("msg", "null");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.addProperty("msg", "error");
+		}
+
+		return new ResponseEntity<>(jo.toString(), HttpStatus.OK);
+	}
+
+	@PostMapping("/theater/screen/post")
+	@ResponseBody
+	public ResponseEntity<String> postScreen(Screen screen, String theater_id) {
+//		System.out.println(screen);
+//		System.out.println(theater_id);
+		JsonObject jo = new JsonObject();
+		try {
+			Theater theater = theaterService.getDetail(Long.valueOf(theater_id));
+			screen.setTheater(theater);
+			screenService.create(screen, 96);
+			jo.addProperty("msg", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.addProperty("msg", "error");
+		}
+
+		return new ResponseEntity<>(jo.toString(), HttpStatus.OK);
+	}
+
+	@PostMapping("/theater/screen/delete")
+	@ResponseBody
+	public ResponseEntity<String> deleteScreen(Screen screen) {
+		JsonObject jo = new JsonObject();
+		try {
+			screenService.deleteScreen(screen);
+			jo.addProperty("msg", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.addProperty("msg", "error");
+		}
+
+		return new ResponseEntity<>(jo.toString(), HttpStatus.OK);
+	}
+
 	@GetMapping("/theater_form")
 	public String theaterForm(Model model) {
 		model.addAttribute("title", "영화관 등록");
@@ -177,15 +250,102 @@ public class AdminMovieController {
 			e.printStackTrace();
 			json.addProperty("msg", "fail");
 		}
-
-
 		return new ResponseEntity<>(json.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/theater_screen")
-	public String theaterScreen(Model model) {
+	public String theaterScreen(Model model, Screen screen) {
+		Screen sc = screenService.getScreen(screen.getId());
+
+		model.addAttribute("screen", sc);
 		model.addAttribute("title", "영화관 등록");
 		return "admin/movie/theater_screen";
+	}
+
+	@GetMapping("/theater/screen/movie/list")
+	@ResponseBody
+	public ResponseEntity<String> getMovieList() {
+		JsonObject jo = new JsonObject();
+		try {
+			List<Movie> movies = movieService.getMovieList("O");
+			if(movies.size() > 0) {
+				jo.addProperty("msg", "success");
+				ObjectMapper om = new ObjectMapper();
+				om.registerModule(new JavaTimeModule());
+				String json = om.writeValueAsString(movies);
+				jo.addProperty("movies", json);
+			} else {
+				jo.addProperty("msg", "null");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.addProperty("msg", "error");
+		}
+
+		return new ResponseEntity<>(jo.toString(), HttpStatus.OK);
+	}
+
+	@PostMapping("/theater/screen/schedule/post")
+	@ResponseBody
+	public ResponseEntity<String> postSchedule(Schedule schedule, String movieCd, String screenId) {
+		JsonObject jo = new JsonObject();
+		ZoneId zoneId = ZoneId.of("Asia/Seoul"); // 또는 원하는 시간대로 설정
+		ZonedDateTime zonedDateTime = schedule.getScreeningDate().atZone(ZoneOffset.UTC).withZoneSameInstant(zoneId);
+		LocalDateTime scd = zonedDateTime.toLocalDateTime();
+		ZonedDateTime zonedDateTime1 = schedule.getStartTime().atZone(ZoneOffset.UTC).withZoneSameInstant(zoneId);
+		LocalDateTime sd = zonedDateTime1.toLocalDateTime();
+		ZonedDateTime zonedDateTime2 = schedule.getEndTime().atZone(ZoneOffset.UTC).withZoneSameInstant(zoneId);
+		LocalDateTime ed = zonedDateTime2.toLocalDateTime();
+		schedule.setScreeningDate(scd);
+		schedule.setStartTime(sd);
+		schedule.setEndTime(ed);
+
+
+		System.out.println(schedule);
+		System.out.println(movieCd);
+		System.out.println(screenId);
+
+		try {
+			scheduleService.inert(schedule, movieCd, Long.valueOf(screenId));
+			jo.addProperty("msg", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.addProperty("msg", "error");
+		}
+
+		return new ResponseEntity<>(jo.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping("/theater/screen/schedule/list/get")
+	@ResponseBody
+	public ResponseEntity<String> getScheduleList(Schedule schedule, String screenId) {
+		JsonObject jo = new JsonObject();
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		ZonedDateTime zonedDateTime = schedule.getScreeningDate().atZone(ZoneOffset.UTC).withZoneSameInstant(zoneId);
+		LocalDateTime scd = zonedDateTime.toLocalDateTime();
+
+		try {
+			List<Schedule> list = scheduleService.getSchduleList(Long.valueOf(screenId), scd, "O");
+			if(list.size() > 0) {
+				for(Schedule sch : list) {
+//					sch.setMovie(null);
+					sch.setScreen(null);
+				}
+				ObjectMapper om = new ObjectMapper();
+				om.registerModule(new JavaTimeModule());
+				String json = om.writeValueAsString(list);
+				jo.addProperty("msg", "success");
+				jo.addProperty("schedules", json);
+			} else {
+				jo.addProperty("msg", "null");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.addProperty("msg", "error");
+		}
+
+
+		return new ResponseEntity<>(jo.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/movie_list")
