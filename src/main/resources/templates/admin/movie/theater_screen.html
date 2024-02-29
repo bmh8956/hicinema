@@ -3,6 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layouts/layout_admin}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/admin/css/theater_screen.css}">
 </th:block>
@@ -20,17 +25,18 @@
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">수유 > 상영관</h4>
+                                <h4 class="card-title">[[${screen.theater.name}]] > 상영관</h4>
                                 <form class="form-sample">
                                     <p class="card-description">
-                                        1관
+                                        [[${screen.name}]]관
                                     </p>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">영화관 명</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" readonly value="수유">
+                                                    <input type="text" class="form-control" readonly
+                                                           th:value="${screen.theater.name}">
                                                 </div>
                                             </div>
                                         </div>
@@ -40,7 +46,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">좌석</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" readonly value="96석">
+                                                    <input type="text" class="form-control" readonly
+                                                           th:value="${screen.seat + '석'}">
                                                 </div>
                                             </div>
                                         </div>
@@ -76,10 +83,10 @@
                                                         <table class="table table-hover">
                                                             <thead>
                                                             <tr>
-                                                                <th>상영일</th>
-                                                                <th>영화명</th>
-                                                                <th>상영시간</th>
-                                                                <th>잔여좌석</th>
+                                                                <th width="10%">상영일</th>
+                                                                <th width="60%">영화명</th>
+                                                                <th width="20%">상영시간</th>
+                                                                <th width="10%">잔여좌석</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody id="schedule_list">
@@ -132,6 +139,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script>
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
         let datepicker = async () => {
             $("#datepicker").datepicker({
                 showOtherMonths: true,
@@ -261,10 +270,11 @@
             let td2 = document.createElement("td");
             let td3 = document.createElement("td");
             let td4 = document.createElement("td");
+            let td5 = document.createElement("td");
 
             let td2_sel = document.createElement("select");
-            td2_sel.innerHTML = await movie_list();
             td2_sel.id = "movie-info"
+            td2_sel.style.width = '90%'
             td2_sel.onchange = () => {
                 if (document.getElementById("startTime").value) {
                     startTimeSet();
@@ -274,54 +284,156 @@
             td1.textContent = document.getElementById("sel_day1").textContent;
             td2.append(td2_sel);
             td3.innerHTML = "<input type='time' onchange='startTimeSet(this)' id='startTime'> ~ <input type='time' readonly id='endTime'>";
-            td4.textContent = "0/96"
-
+            td4.innerHTML = '<select id="seatType"><option>A</option></select>'
+            td5.innerHTML = "<button type='button' class='btn btn-outline-secondary btn-rounded btn-icon' onclick='post_schedule()'><i class='mdi mdi-playlist-check text-info'></i></button>";
             tr.append(td1)
             tr.append(td2)
             tr.append(td3)
             tr.append(td4)
+            tr.append(td5)
             table.append(tr)
+            await movie_list();
+        }
+
+        let post_schedule = () => {
+            let screeningDate = document.getElementById("sel_day1").textContent;
+            let startTime = document.getElementById("startTime").value;
+            let endTime = document.getElementById("endTime").value;
+            let movieCd = document.getElementById("movie-info").value;
+            let seatType = document.getElementById("seatType").value;
+            let screen = [[${screen.id}]]
+
+            let scd = new Date(Number(screeningDate.split(".")[0]), screeningDate.split(".")[1] - 1, Number(screeningDate.split(".")[2]));
+            let sd = new Date(scd);
+            sd.setHours(Number(startTime.split(":")[0]))
+            sd.setMinutes(Number(startTime.split(":")[1]))
+            let ed = new Date(scd);
+            ed.setHours(Number(endTime.split(":")[0]))
+            ed.setMinutes(Number(endTime.split(":")[1]))
+
+            console.log(scd)
+            console.log(sd)
+            console.log(ed)
+
+            $.ajax({
+                type: "post",
+                url: "/admin/movie/theater/screen/schedule/post",
+                data: {
+                    screeningDate: scd.toISOString(),
+                    startTime: sd.toISOString(),
+                    endTime: ed.toISOString(),
+                    movieCd: movieCd,
+                    seatType: seatType,
+                    screenId:screen
+                },
+                beforeSend: function (xhr) {
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (res) {
+                    if (typeof res === 'string') {
+                        res = JSON.parse(res)
+                    }
+                    console.log(res)
+                    if (res.msg === 'success') {
+                        schedule()
+                    } else {
+
+                    }
+                }
+            });
+
         }
 
         let schedule = () => {
             let html = "";
+            let screenId = [[${screen.id}]]
+            let screeningDate = document.getElementById("sel_day1").textContent;
+            let scd = new Date(Number(screeningDate.split(".")[0]), screeningDate.split(".")[1] - 1, Number(screeningDate.split(".")[2])).toISOString();
 
+            $.ajax({
+                    type: "get",
+                    url: "/admin/movie/theater/screen/schedule/list/get",
+                    data: {
+                        screenId: screenId,
+                        screeningDate: scd
+                    },
+                    success: function (res) {
+                        if(typeof res === 'string') {
+                            res = JSON.parse(res)
+                        }
+                        console.log(res)
+                        if(res.msg === 'success') {
+                            let list = JSON.parse(res.schedules)
+                            console.log(list)
+                            for(let sch of list) {
+                                html +=
+                                    '<tr>' +
+                                        '<td>' +
+                                            sch.screeningDate[0] + "." + zero(sch.screeningDate[1]) + "." + zero(sch.screeningDate[2]) +
+                                        '</td>' +
+                                        '<td class="text-primary">' +
+                                            sch.movie.title +
+                                        '</td>' +
+                                        '<td>' +
+                                            zero(sch.startTime[3]) + ":" + zero(sch.startTime[4]) + "<br>~<br>" +
+                                            zero(sch.endTime[3]) + ":" + zero(sch.endTime[4]) +
+                                        '</td>' +
+                                        '<td>' +
+                                            '0/96' +
+                                        '</td>' +
+                                    '</tr>'
+                            }
+                        } else {
+                            html =
+                                '<tr>' +
+                                    '<td colspan="3">등록된 상영스케쥴이 없습니다.</td>' +
+                                '</tr>'
+                        }
+                        document.getElementById("schedule_list").innerHTML = html;
+                    }
+                });
+        }
 
-            html = '<tr>' +
-                ' <td>2024.02.21</td>' +
-                ' <td class="text-primary">' +
-                '웡카' +
-                '</td>' +
-                ' <td>09:00 ~ 10:35</td>' +
-                ' <td>' +
-                '35/96' +
-                '</td>' +
-                '</tr>' +
-                ' <tr>' +
-                ' <td>2024.02.21</td>' +
-                ' <td class="text-primary">' +
-                '웡카' +
-                '</td>' +
-                ' <td>11:00 ~ 12:35</td>' +
-                ' <td>' +
-                '35/96' +
-                '</td>' +
-                '</tr>';
-
-            document.getElementById("schedule_list").innerHTML = html;
-            console.log("aa")
+        let zero = (num) => {
+            if(num == 0) {
+                num = '00';
+            } else if(num < 10) {
+                num = '0' + num;
+            }
+            return num
         }
 
         let movie_list = () => {
             let html = "";
 
-            //임시
-            html = "<option data-running-time='132'>파묘</option>" +
-                "<option data-running-time='161'>듄2</option>" +
-                "<option data-running-time='116'>웡카</option>" +
-                "<option data-running-time='104'>소풍</option>" +
-                "<option data-running-time='151'>시민덕희</option>";
-            return html;
+            $.ajax({
+                type: "get",
+                url: "/admin/movie/theater/screen/movie/list",
+                data: {},
+                success: function (res) {
+                    if (typeof res === 'string') {
+                        res = JSON.parse(res)
+                    }
+                    if (res.msg === 'success') {
+                        let list = JSON.parse(res.movies)
+                        console.log(list)
+                        for (let movie of list) {
+                            html += "<option value='" + movie.movieCd + "' data-running-time='" + movie.runtime + "'>" + movie.title + "</option>"
+                        }
+                        document.getElementById("movie-info").innerHTML = html;
+                    } else {
+
+                    }
+                }
+            });
+            // //임시
+            // html = "<option data-running-time='132'>파묘</option>" +
+            //     "<option data-running-time='161'>듄2</option>" +
+            //     "<option data-running-time='116'>웡카</option>" +
+            //     "<option data-running-time='104'>소풍</option>" +
+            //     "<option data-running-time='151'>시민덕희</option>";
+            // return html;
         }
 
         let startTimeSet = () => {
