@@ -31,4 +31,12 @@ public class MovieService {
 	public List<Movie> getUserMoviePage(MovieSearchDto mv) {
 		return mvRepository.getUserMoviePage(mv);
 	}
+
+	public List<Movie> getMovieList(String status) {
+		return mvRepository.findByStatusOrderByRegDateAsc(status);
+	}
+
+	public Movie getMovie(String movieCd, String status) {
+		return mvRepository.findByMovieCdAndStatus(movieCd, status).get();
+	}
 }

@@ -3,6 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layouts/layout_admin}">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
 <th:block layout:fragment="css">
 
 </th:block>
@@ -39,7 +44,9 @@
                                                 <label class="col-sm-3 col-form-label">지역</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control">
-                                                        <option th:each="loc:${locList}" th:value="${loc.id}" th:text="${loc.name}" th:selected="${loc.id == theater.location.id}"></option>
+                                                        <option th:each="loc:${locList}" th:value="${loc.id}"
+                                                                th:text="${loc.name}"
+                                                                th:selected="${loc.id == theater.location.id}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -61,7 +68,8 @@
                                                 <label class="col-sm-3 col-form-label">우편번호</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="addr1" readonly
-                                                           onclick="sample2_execDaumPostcode()" th:field="${theater.zipcode}">
+                                                           onclick="sample2_execDaumPostcode()"
+                                                           th:field="${theater.zipcode}">
                                                 </div>
                                             </div>
                                         </div>
@@ -72,7 +80,8 @@
                                                 <label class="col-sm-3 col-form-label">주소</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="addr2" readonly
-                                                           onclick="sample2_execDaumPostcode()" th:field="${theater.addr}">
+                                                           onclick="sample2_execDaumPostcode()"
+                                                           th:field="${theater.addr}">
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +91,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">상세주소</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="addr3" th:field="${theater.addr_detail}"/>
+                                                    <input type="text" class="form-control" id="addr3"
+                                                           th:field="${theater.addr_detail}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,7 +102,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">참고</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="addr4" readonly th:field="${theater.addr_ref}">
+                                                    <input type="text" class="form-control" id="addr4" readonly
+                                                           th:field="${theater.addr_ref}">
                                                 </div>
                                             </div>
                                         </div>
@@ -105,10 +116,12 @@
                                                 <div class="input-group col-sm-9">
                                                     <input type="text"
                                                            class="form-control form-control-lg file-upload-info"
-                                                           disabled="" placeholder="Upload Image" th:value="${file.oriImgName}">
+                                                           disabled="" placeholder="Upload Image"
+                                                           th:value="${file.oriImgName}">
                                                     <span class="input-group-append">
                                                       <button class="file-upload-browse btn btn-gradient-primary"
-                                                              type="button" style="height: 73%" onclick="document.getElementById('img').click();">Upload</button>
+                                                              type="button" style="height: 73%"
+                                                              onclick="document.getElementById('img').click();">Upload</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -134,7 +147,8 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">공지</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control" id="exampleTextarea1" rows="4" th:field="${theater.content}">
+                                                    <textarea class="form-control" id="exampleTextarea1" rows="4"
+                                                              th:field="${theater.content}">
 
                                                     </textarea>
                                                 </div>
@@ -159,40 +173,14 @@
                                             <th colspan="2">
                                                 <button type="button"
                                                         class="btn btn-outline-secondary btn-rounded btn-icon text-primary"
-                                                        style="font-size: 20px">
+                                                        style="font-size: 20px" id="add_screen" onclick="screen_form()">
                                                     +
                                                 </button>
                                             </th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td><a href="/admin/movie/theater_screen">1관</a></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-outline-secondary btn-rounded btn-icon text-danger">
-                                                    x
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="/admin/movie/theater_screen">2관</a></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-outline-secondary btn-rounded btn-icon text-danger">
-                                                    x
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="/admin/movie/theater_screen">3관</a></td>
-                                            <td>
-                                                <button type="button"
-                                                        class="btn btn-outline-secondary btn-rounded btn-icon text-danger">
-                                                    x
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        <tbody id="screen_list">
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -200,9 +188,11 @@
                         </div>
                     </div>
                 </div>
-                <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+                <div id="layer"
+                     style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
                     <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer"
-                         style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()"
+                         style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1"
+                         onclick="closeDaumPostcode()"
                          alt="닫기 버튼">
                 </div>
             </div>
@@ -305,9 +295,135 @@
         }
     </script>
     <script>
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        let screen_name_arr = [];
 
+        let delete_screen = (id) => {
+            if (!id) {
+                document.getElementById("screen_form").remove()
+                get_screen();
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/movie/theater/screen/delete",
+                    data: {
+                        id: id
+                    },
+                    beforeSend: function (xhr) {
+                        /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (res) {
+                        if(typeof res === 'string') {
+                            res = JSON.parse(res)
+                        }
+                        get_screen();
+                        if(res.msg !== 'success') {
+                            alert("오류가 발생했습니다.")
+                            location.reload()
+                        }
+                    }
+                });
+            }
+        }
 
-        console.log(file)
+        let screen_form = () => {
+            if (document.getElementById("screen_name")) {
+                return
+            } else {
+                let html =
+                    '<tr id="screen_form">' +
+                    '<td>' +
+                    '<input type="text" id="screen_name">' +
+                    '</td>' +
+                    '<td>' +
+                    "<button type='button' class='btn btn-outline-secondary btn-rounded btn-icon' onclick='delete_screen()'><i class='mdi mdi-playlist-remove text-danger'></i></button>" +
+                    "<button type='button' class='btn btn-outline-secondary btn-rounded btn-icon' onclick='post_screen()'><i class='mdi mdi-playlist-check text-info'></i></button>" +
+                    '</td>' +
+                    '</tr>';
+                let list = document.getElementById("screen_list");
+                if(list.querySelector("#null")) {
+                    list.innerHTML = html;
+                } else {
+                    list.innerHTML += html;
+                }
+            }
+        }
+
+        let post_screen = () => {
+            let name = document.getElementById("screen_name");
+            let theater_id = [[${theater.id}]]
+            if(screen_name_arr.indexOf(name.value) > -1) {
+                alert("이미 등록된 상영관입니다.")
+                return false;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/admin/movie/theater/screen/post",
+                data: {
+                    theater_id: theater_id,
+                    name: name.value
+                },
+                beforeSend: function (xhr) {
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (res) {
+                    if(typeof res === 'string') {
+                        res = JSON.parse(res)
+                    }
+                    if(res.msg === 'success') {
+                        get_screen();
+                    } else {
+                        alert("에러가 발생했습니다.")
+                        location.reload();
+                    }
+                }
+            });
+        }
+
+        let get_screen = () => {
+            let theater_id = [[${theater.id}]]
+            // console.log(theater_id)
+            let html = "";
+            $.ajax({
+                type: "get",
+                url: "/admin/movie/theater/screen/get",
+                data: {
+                    id: theater_id
+                },
+                success: function (res) {
+                    if (typeof res === 'string') {
+                        res = JSON.parse(res)
+                    }
+                    // console.log(res)
+                    if (res.msg === "success") {
+                        let list = JSON.parse(res.list)
+                        for (let screen of list) {
+                            html += '<tr>' +
+                                '<td><a href="/admin/movie/theater_screen?id=' + screen.id + '">' + screen.name + '관</a></td>' +
+                                '<td>' +
+                                '<button type="button" class="btn btn-outline-secondary btn-rounded btn-icon text-danger" onclick="delete_screen(' + screen.id + ')">' +
+                                    'x' +
+                                '</button>' +
+                                '</td>' +
+                                '</tr>'
+                            screen_name_arr.push(screen.name)
+                        }
+                    } else {
+                        html = '<td colspan="2" id="null">등록된 상영관이 없습니다.</td>'
+                    }
+                    document.getElementById("screen_list").innerHTML = html;
+                }
+            });
+        }
+
+        window.onload = () => {
+            get_screen();
+
+        }
     </script>
 </th:block>
 </body>

@@ -101,9 +101,6 @@
                         /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
                         xhr.setRequestHeader(header, token);
                     },
-                    // processData:false, // 멀티파트폼으로 보내기위해서 설정
-                    // contentType:false, // 멀티파트폼으로 보내기위해서 설정
-                    // async: true, // 기본값true
                     success: function (res) {
                         get_list();
                     }
@@ -128,9 +125,6 @@
                     /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
                     xhr.setRequestHeader(header, token);
                 },
-                // processData:false, // 멀티파트폼으로 보내기위해서 설정
-                // contentType:false, // 멀티파트폼으로 보내기위해서 설정
-                // async: true, // 기본값true
                 success: function (res) {
                     get_list();
                 }
@@ -142,9 +136,6 @@
             $.ajax({
                 type: "get",
                 url: "/admin/movie/loc_list/get",
-                // processData:false, // 멀티파트폼으로 보내기위해서 설정
-                // contentType:false, // 멀티파트폼으로 보내기위해서 설정
-                // async: true, // 기본값true
                 success: function (res) {
                     if (typeof res === 'string') {
                         res = JSON.parse(res)
