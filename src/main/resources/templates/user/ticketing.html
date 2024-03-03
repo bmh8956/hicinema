@@ -6,6 +6,50 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" th:href="@{/css/ticketing.css}">
+    <style>
+        .modal-body .row {
+            margin: 0 auto !important;
+            height: 100% !important;
+        }
+
+        .modal-dialog .modal-body {
+            height: auto !important;
+        }
+
+        .modal-body .row div {
+            padding: 0 !important;
+            height: 100% !important;
+        }
+        .modal-body .row div img {
+            height: 100% !important;
+        }
+
+        .modal-content {
+            /*background: 0;*/
+            border: 0;
+        }
+
+        .modal-dialog {
+            width: 50% !important;
+        }
+
+        /*.tab-pane#description .tab-single .row{*/
+        /*    margin: 10%;*/
+        /*}*/
+
+        .tab-pane#description .tab-single .row .col-lg-5.col-12 {
+            margin: 4%;
+        }
+
+        .modal-body {
+            /*align-self: end;*/
+        }
+
+        .ticketing ul {
+            overflow: scroll;
+            height: 600px;
+        }
+    </style>
 </th:block>
 
 <div layout:fragment="content">
@@ -24,77 +68,19 @@
                             </div>
                             <div class="theater-location">
                                 <ul>
-                                    <li class="loc active">
-                                        <span class="loc-name active"><strong>서울</strong></span>
+                                    <li class="loc" th:each="loc, index:${locations}"
+                                        th:classappend="${index.index == 0}? 'active' : ''" th:onclick="get_theaters([[${loc.id}]])" th:attr="data-id=${loc.id}">
+                                        <span class="loc-name"><strong th:text="${loc.name}"></strong></span>
                                         <span class="loc-cnt">(11)</span>
                                     </li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>경기/인천</strong></span>
-                                        <span class="loc-cnt">(11)</span>
-                                    </li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>충천/대전</strong></span>
-                                        <span class="loc-cnt">(11)</span>
-                                    </li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>전라/광주</strong></span>
-                                        <span class="loc-cnt">(11)</span>
-                                    </li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>경북/대구</strong></span>
-                                        <span class="loc-cnt">(11)</span>
-                                    </li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>전라/광주</strong></span>
-                                        <span class="loc-cnt">(11)</span>
-                                    </li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>경남/부산/울산</strong></span>
-                                        <span class="loc-cnt">(11)</span>
-                                    </li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>강원</strong></span>
-                                        <span class="loc-cnt">(11)</span></li>
-                                    <li class="loc">
-                                        <span class="loc-name"><strong>제주</strong></span>
-                                        <span class="loc-cnt">(11)</span></li>
                                 </ul>
                             </div>
                             <div class="theater-select">
-                                <ul>
-                                    <li class="theaters active">
-                                        <span class="theater-name active"><strong>가산디지털</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>가양</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>강동</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>건대입구</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>김포공항</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>노원</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>독산</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>신사</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>서울대입구</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>수락산</strong></span>
-                                    </li>
-                                    <li class="theaters">
-                                        <span class="theater-name"><strong>수유</strong></span>
-                                    </li>
+                                <ul id="theaters">
+<!--                                    <li class="theaters" th:each="theater, index:${theaters}"-->
+<!--                                        th:classappend="${index.index == 0}? 'active' : ''">-->
+<!--                                        <span class="theater-name"><strong th:text="${theater.name}"></strong></span>-->
+<!--                                    </li>-->
                                 </ul>
                             </div>
                         </div>
@@ -106,52 +92,16 @@
                             </div>
                             <div class="movie-select">
                                 <ul>
-                                    <li class="movies active">
+                                    <li class="movies" th:each="movie, index:${movies}"
+                                        th:classappend="${index.index == 0}? 'active' : ''" th:attr="data-movieCd=${movie.movieCd}" th:onclick="schedule('', [[${movie.movieCd}]])">
                                         <strong class="movie-list-info">
-                                            <span class="gr_15"></span>
+                                            <span th:class="${movie.rats == '15세이상관람가'} ? 'gr_15' : 'd-none'"></span>
+                                            <span th:class="${movie.rats == '전체관람가'} ? 'gr_all' : 'd-none'"></span>
+                                            <span th:class="${movie.rats == '12세이상관람가'} ? 'gr_12' : 'd-none'"></span>
+                                            <span th:class="${movie.rats == '18세이상관람가'} ? 'gr_18' : 'd-none'"></span>
                                             <span class="movie-name">
-											영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목영화제목
-										</span>
-                                        </strong>
-                                    </li>
-                                    <li class="movies">
-                                        <strong class="movie-list-info">
-                                            <span class="gr_all"></span>
-                                            <span class="movie-name">
-											영화제목
-										</span>
-                                        </strong>
-                                    </li>
-                                    <li class="movies">
-                                        <strong class="movie-list-info">
-                                            <span class="gr_12"></span>
-                                            <span class="movie-name">
-											영화제목
-										</span>
-                                        </strong>
-                                    </li>
-                                    <li class="movies">
-                                        <strong class="movie-list-info">
-                                            <span class="gr_18"></span>
-                                            <span class="movie-name">
-											영화제목
-										</span>
-                                        </strong>
-                                    </li>
-                                    <li class="movies">
-                                        <strong class="movie-list-info">
-                                            <span class="gr_none"></span>
-                                            <span class="movie-name">
-											영화제목
-										</span>
-                                        </strong>
-                                    </li>
-                                    <li class="movies">
-                                        <strong class="movie-list-info">
-                                            <span class="gr_all"></span>
-                                            <span class="movie-name">
-											영화제목
-										</span>
+											    [[${movie.title}]]
+										    </span>
                                         </strong>
                                     </li>
                                 </ul>
@@ -171,124 +121,11 @@
                                     </div>
                                 </div>
                                 <div id="datepicker_row"></div>
+                                <input type="hidden" name="" id="sel_day">
+                                <p id="sel_day1" class="d-none"></p>
                             </div>
                             <div class="reservations">
-                                <ul>
-                                    <li class="reservation">
-                                        <div class="screen-info">
-                                            <div class="screen-time">
-                                                <p class="time start">11:00</p>
-                                                ~
-                                                <p class="time end">12:35</p>
-                                            </div>
-                                            <div class="screen-movie">
-                                                <div class="movie-content">
-                                                    <div class="movie-title">
-                                                        <strong>웡카</strong></div>
-                                                    <div class="movie-detail-info">
-                                                        <em class="movie-dimension">2D</em>
-                                                        <em class="movie-caption">(자막)</em>
-                                                    </div>
-                                                </div>
-                                                <div class="screen-details">
-                                                    <div class="screen-detail">3관</div>
-                                                    <div class="screen-seat">50/130</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="reservation">
-                                        <div class="screen-info">
-                                            <div class="screen-time">
-                                                <p class="time start">11:00</p>
-                                                ~
-                                                <p class="time end">12:35</p>
-                                            </div>
-                                            <div class="screen-movie">
-                                                <div class="movie-content">
-                                                    <div class="movie-title">
-                                                        <strong>웡카</strong></div>
-                                                    <div class="movie-detail-info">
-                                                        <em class="movie-dimension">2D</em>
-                                                        <em class="movie-caption">(자막)</em>
-                                                    </div>
-                                                </div>
-                                                <div class="screen-details">
-                                                    <div class="screen-detail">3관</div>
-                                                    <div class="screen-seat">50/130</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="reservation">
-                                        <div class="screen-info">
-                                            <div class="screen-time">
-                                                <p class="time start">11:00</p>
-                                                ~
-                                                <p class="time end">12:35</p>
-                                            </div>
-                                            <div class="screen-movie">
-                                                <div class="movie-content">
-                                                    <div class="movie-title">
-                                                        <strong>웡카</strong></div>
-                                                    <div class="movie-detail-info">
-                                                        <em class="movie-dimension">2D</em>
-                                                        <em class="movie-caption">(자막)</em>
-                                                    </div>
-                                                </div>
-                                                <div class="screen-details">
-                                                    <div class="screen-detail">3관</div>
-                                                    <div class="screen-seat">50/130</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="reservation">
-                                        <div class="screen-info">
-                                            <div class="screen-time">
-                                                <p class="time start">11:00</p>
-                                                ~
-                                                <p class="time end">12:35</p>
-                                            </div>
-                                            <div class="screen-movie">
-                                                <div class="movie-content">
-                                                    <div class="movie-title">
-                                                        <strong>웡카</strong></div>
-                                                    <div class="movie-detail-info">
-                                                        <em class="movie-dimension">2D</em>
-                                                        <em class="movie-caption">(자막)</em>
-                                                    </div>
-                                                </div>
-                                                <div class="screen-details">
-                                                    <div class="screen-detail">3관</div>
-                                                    <div class="screen-seat">50/130</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="reservation">
-                                        <div class="screen-info">
-                                            <div class="screen-time">
-                                                <p class="time start">11:00</p>
-                                                ~
-                                                <p class="time end">12:35</p>
-                                            </div>
-                                            <div class="screen-movie">
-                                                <div class="movie-content">
-                                                    <div class="movie-title">
-                                                        <strong>웡카</strong></div>
-                                                    <div class="movie-detail-info">
-                                                        <em class="movie-dimension">2D</em>
-                                                        <em class="movie-caption">(자막)</em>
-                                                    </div>
-                                                </div>
-                                                <div class="screen-details">
-                                                    <div class="screen-detail">3관</div>
-                                                    <div class="screen-seat">50/130</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                <ul id="reservation_list">
                                     <li class="reservation">
                                         <div class="screen-info">
                                             <div class="screen-time">
@@ -325,116 +162,26 @@
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="text-align: center">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
                                                                                                       aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row no-gutters">
-                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <!-- Product Slider -->
-                            <div class="product-gallery">
-                                <div class="quickview-slider-active">
-                                    <div class="single-slider">
-                                        <img src="images/modal1.jpg" alt="#">
-                                    </div>
-                                    <div class="single-slider">
-                                        <img src="images/modal2.jpg" alt="#">
-                                    </div>
-                                    <div class="single-slider">
-                                        <img src="images/modal3.jpg" alt="#">
-                                    </div>
-                                    <div class="single-slider">
-                                        <img src="images/modal4.jpg" alt="#">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Product slider -->
-                        </div>
-                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="quickview-content">
-                                <h2>Flared Shift Dress</h2>
+                                <h2 id="modal_movie_title">영화제목영화제목영화제목영화제목</h2>
                                 <div class="quickview-ratting-review">
-                                    <div class="quickview-ratting-wrap">
-                                        <div class="quickview-ratting">
-                                            <i class="yellow fa fa-star"></i>
-                                            <i class="yellow fa fa-star"></i>
-                                            <i class="yellow fa fa-star"></i>
-                                            <i class="yellow fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <a href="#"> (1 customer review)</a>
-                                    </div>
-                                    <div class="quickview-stock">
-                                        <span><i class="fa fa-check-circle-o"></i> in stock</span>
-                                    </div>
+
                                 </div>
-                                <h3>$29.00</h3>
                                 <div class="quickview-peragraph">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
-                                        ad
-                                        impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
-                                        nemo
-                                        ipsum numquam.</p>
+                                    <p id="modal_seat_info">잔여좌석 : 30/96</p>
+                                    <p id="modal_rats">해당영화는 만 12세 이상 관람가 영화입니다.</p>
                                 </div>
-                                <div class="size">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12">
-                                            <h5 class="title">Size</h5>
-                                            <select>
-                                                <option selected="selected">s</option>
-                                                <option>m</option>
-                                                <option>l</option>
-                                                <option>xl</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6 col-12">
-                                            <h5 class="title">Color</h5>
-                                            <select>
-                                                <option selected="selected">orange</option>
-                                                <option>purple</option>
-                                                <option>black</option>
-                                                <option>pink</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="quantity">
-                                    <!-- Input Order -->
-                                    <div class="input-group">
-                                        <div class="button minus">
-                                            <button type="button" class="btn btn-primary btn-number" disabled="disabled"
-                                                    data-type="minus" data-field="quant[1]">
-                                                <i class="ti-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" name="quant[1]" class="input-number" data-min="1"
-                                               data-max="1000"
-                                               value="1">
-                                        <div class="button plus">
-                                            <button type="button" class="btn btn-primary btn-number" data-type="plus"
-                                                    data-field="quant[1]">
-                                                <i class="ti-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <!--/ End Input Order -->
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#" class="btn">Add to cart</a>
-                                    <a href="#" class="btn min"><i class="ti-heart"></i></a>
-                                    <a href="#" class="btn min"><i class="fa fa-compress"></i></a>
-                                </div>
-                                <div class="default-social">
-                                    <h4 class="share-now">Share:</h4>
-                                    <ul>
-                                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                        <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    </ul>
+                                <div class="add-to-cart" style="width: 100%; text-align: center">
+                                    <button type="button" class="btn" onclick="save_schedule();">인원/좌석 선택</button>
                                 </div>
                             </div>
                         </div>
@@ -467,10 +214,11 @@
                     return [true, "", ""];
                 }
             });
+            await sel_today();
             await draw_datepicker();
         }
 
-        let draw_datepicker = () => {
+        let draw_datepicker = async () => {
             let date = document.querySelectorAll(".ui-datepicker-calendar tbody td");
             let d = [];
             let next = document.createElement("button")
@@ -500,6 +248,9 @@
 
                 tag1.innerHTML = "<strong><p>" + a.textContent + "</p><p>" + arr_dw[dw] + "</p></strong>";
                 document.getElementById("datepicker_row").append(tag1)
+                tag1.onclick = () => {
+                    select(tag1);
+                }
                 // document.getElementById("datepicker_row").append(tag1)
                 d.push(obj);
             }
@@ -527,9 +278,61 @@
                 document.getElementById("datepicker_row").innerHTML = ''
                 draw_datepicker()
             }
+
+            await sel_day();
         }
 
-        let li_click = () => {
+        let select = async (tag) => {
+            let row = document.querySelectorAll("#datepicker_row > div")
+            for (let r of row) {
+                r.classList.remove("active")
+            }
+            tag.classList.add("active")
+            await sel_day();
+            await schedule();
+        }
+
+        let sel_today = () => {
+            let today = document.querySelector(".ui-datepicker-today")
+            today.classList.add("active")
+        }
+
+        let sel_day = async () => {
+            let years = document.querySelector(".ui-datepicker-year").textContent;
+            let months = document.querySelector(".ui-datepicker-month").textContent;
+            let sel_day = document.getElementById("sel_day1")
+            let month_val = months;
+            let year_val = years;
+            if (months.indexOf("0") === 0) {
+                month_val = months.replace("0", "")
+            }
+            sel_day.value = year_val + "." + month_val + "." + document.querySelector("#datepicker_row > div.active p:nth-child(1)").textContent;
+            document.getElementById("sel_day1").textContent = year_val + "." + month_val + "." + document.querySelector("#datepicker_row > div.active p:nth-child(1)").textContent;
+
+            // let movieCd = document.querySelector(".movie-select .movies.active").dataset.movieCd;
+            // let theaterId = document.querySelector("ul.theaters li.theaters.active").dataset.id;
+            // await schedule(theaterId, movieCd);
+        }
+
+        let on_preloader = () => {
+            document.querySelector(".preloader").style.display = 'block'
+            $('body').addClass('no-scroll');
+            // $('.preloader').delay(sec * 1000).fadeOut('slow');
+            // setTimeout(function() {
+            // //After 2s, the no-scroll class of the body will be removed
+            // $('body').removeClass('no-scroll');
+            // }, sec * 1000); //Here you can change preloader time
+        }
+
+        let off_preloader = (sec) => {
+            $('.preloader').delay(sec * 1000).fadeOut('slow');
+            setTimeout(function() {
+            //After 2s, the no-scroll class of the body will be removed
+            $('body').removeClass('no-scroll');
+            }, sec * 1000); //Here you can change preloader time
+        }
+
+        let li_click = async () => {
             let ul = document.querySelectorAll(".ticketing ul")
 
             for (let u of ul) {
@@ -551,10 +354,176 @@
             }
         }
 
+        let schedule = async (theaterId, movieCd) => {
+            on_preloader()
+            let html = '';
+            console.log(movieCd)
+            if(!movieCd) {
+                movieCd = document.querySelector(".movies.active").dataset.moviecd;
+            }
+            if(!theaterId) {
+                theaterId = document.querySelector("li.theaters.active").dataset.id;
+            }
+            let screeningDate = document.getElementById("sel_day1").textContent;
+            let scd = new Date(Number(screeningDate.split(".")[0]), screeningDate.split(".")[1] - 1, Number(screeningDate.split(".")[2])).toISOString();
+            // console.log(movieCd)
+            // console.log(theaterId)
+            // console.log(scd)
+
+            $.ajax({
+                type: "get",
+                url: "/reservation/ticketing/get_schedule",
+                data: {
+                    theaterId: theaterId,
+                    movieCd: movieCd,
+                    screeningDate:scd
+                },
+                success: function (res) {
+                    if(typeof res === 'string') {
+                        res = JSON.parse(res)
+                    }
+                    if(res.msg === 'success') {
+                        let schedules = JSON.parse(res.schedules)
+                        console.log(schedules);
+                        for(let sch of schedules) {
+                            let span = '';
+                            if(sch.RATS === '12세이상관람가') {
+                                span = '<span class="rats gr_12"></span>'
+                            } else if(sch.RATS === '15세이상관람가') {
+                                span = '<span class="rats gr_15"></span>'
+                            } else if(sch.RATS === '18세이상관람가') {
+                                span = '<span class="rats gr_18"></span>'
+                            } else if(sch.RATS === '전체관람가') {
+                                span = '<span class="rats gr_all"></span>'
+                            } else {
+                                span = '<span class="rats gr_none"></span>'
+                            }
+
+                            html +=
+                                '<li class="reservation" onclick="select_schedule(this)" data-id="'+ sch.SCHEDULE_ID +'">' +
+                                    '<div class="screen-info">' +
+                                        '<div class="screen-time">' +
+                                            '<p class="time start">' +
+                                                to_time(sch.START_TIME) +
+                                            '</p>' +
+                                            '~' +
+                                            '<p class="time end">' +
+                                                to_time(sch.END_TIME) +
+                                            '</p>' +
+                                        '</div>' +
+                                        '<div class="screen-movie">' +
+                                            '<div class="movie-content">' +
+                                                '<div class="movie-title">' +
+                                                    span +
+                                                    '<span class="d-none sch_rats">'+ sch.RATS +'</span>' +
+                                                    '<strong class="sch_movie_title">'+ sch.TITLE +'</strong>' +
+                                                '</div>' +
+                                                // '<div class="movie-detail-info">' +
+                                                //     '<em class="movie-dimension">2D</em>' +
+                                                //     '<em class="movie-caption">(자막)</em>' +
+                                                // '</div>' +
+                                            '</div>' +
+                                            '<div class="screen-details">' +
+                                                '<div class="screen-detail">' +
+                                                    sch.NAME + '관' +
+                                                '</div>' +
+                                                '<div class="screen-seat sch_seat_info">' +
+                                                    sch.SELECTED_SEAT + '/' + sch.SEAT +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</li>';
+                        }
+                    } else {
+                        
+                    }
+                    document.getElementById("reservation_list").innerHTML = html;
+                }
+            });
+            await off_preloader(1);
+            // await add_event();
+        }
+
+        let select_schedule = async (tag) => {
+            let title = tag.querySelector(".sch_movie_title").textContent;
+            let seat = tag.querySelector(".sch_seat_info").textContent;
+            let rats = tag.querySelector(".sch_rats").textContent;
+
+            document.getElementById("modal_movie_title").textContent = title;
+            document.getElementById("modal_seat_info").textContent = seat;
+            document.getElementById("modal_rats").textContent = "선택하신 영화는 " + rats + " 영화입니다."
+
+            await open_modal(tag)
+        }
+
+        let open_modal = (tag) => {
+            let a = document.createElement("a")
+            a.href = "#";
+            a.dataset.toggle = "modal"
+            a.dataset.target = "#exampleModal";
+            a.title = "Quick View";
+            a.dataset.id = tag.dataset.id;
+            document.body.append(a)
+            a.click()
+        }
+
+        let to_time = (date) => {
+            let d = new Date(date);
+            let h = d.getHours().toString().padStart(2, '0');
+            let m = d.getMinutes().toString().padStart(2, '0');
+            return h + ":" + m;
+        }
+
+        let get_theaters = (locId) => {
+            let html = '';
+            $.ajax({
+                type: "get",
+                url: "/reservation/ticketing/get_theaters",
+                data: {
+                    loc_id:locId
+                },
+                success: async function (res) {
+                    if(typeof res === 'string') {
+                        res = JSON.parse(res);
+                    }
+                    let list = document.getElementById("theaters");
+                    if(res.msg === 'success') {
+                        let theaters = JSON.parse(res.theaters)
+                        let idx = 0;
+                        for(let tht of theaters) {
+                            html +=
+                                '<li class="theaters '+ ((idx === 0)? 'active': '') + '" data-id="'+ tht.id +'" onclick="schedule('+ tht.id +', '+ document.querySelector(".movies.active").dataset.moviecd +')">' +
+                                '<span class="theater-name"><strong>'+ tht.name +'</strong></span>' +
+                                '</li>';
+                            idx++;
+                        }
+                    } else {
+                        html = '';
+                    }
+                    list.innerHTML = html;
+
+                    await schedule();
+                }
+            });
+        }
+
+        let save_schedule = async () => {
+            let data = {
+                schedule_id: document.querySelector(".reservation.active").dataset.id
+            }
+            sessionStorage.setItem("info", JSON.stringify(data));
+            await next_page();
+        }
+
+        let next_page = () => {
+            location.href = "/reservation/ticketing/seat";
+        }
+
         $(document).ready(function () {
             datepicker();
             li_click();
-
+            get_theaters(document.querySelector(".theater-location .loc.active").dataset.id);
         });
     </script>
 </th:block>

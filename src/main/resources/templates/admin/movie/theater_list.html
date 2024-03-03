@@ -136,7 +136,7 @@
                             html +=
                                 '<tr>' +
                                 '<td><input type="checkbox" name=""></td>' +
-                                '<td>' + (index + Number(res.number) * Number(res.size) + 1) + '</td>' +
+                                '<td>' + (res.totalElements - (page * res.size) - index) + '</td>' +
                                 '<td>' + tht.location.name + '</td>' +
                                 '<td><a href="/admin/movie/theater_detail?id='+ tht.id +'">' + tht.name + '</a></td>' +
                                 '<td>' + tht.addr + '</td>' +
