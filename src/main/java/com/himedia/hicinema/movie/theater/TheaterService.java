@@ -1,5 +1,6 @@
 package com.himedia.hicinema.movie.theater;
 
+import com.himedia.hicinema.movie.loc.Location;
 import com.himedia.hicinema.movie.loc.LocationRepository;
 import com.himedia.hicinema.upload.FileRepository;
 import com.himedia.hicinema.upload.FileUploadService;
@@ -52,5 +53,13 @@ public class TheaterService {
 
 	public Theater getDetail(Long id) {
 		return theaterRepository.findById(id).get();
+	}
+
+	public List<Theater> getList(String status) {
+		return theaterRepository.findByStatusOrderByIdAsc(status);
+	}
+
+	public List<Theater> getTheaterList(Location location, String status) {
+		return theaterRepository.findByLocationAndStatusOrderByIdAsc(location, status);
 	}
 }

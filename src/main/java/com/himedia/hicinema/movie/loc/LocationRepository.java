@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LocationRepository extends JpaRepository<Location, Long> {
-	List<Location> findByStatus(String status);
+	List<Location> findByStatusOrderByIdAsc(String status);
 //	Optional<Location> findById(String id);
+
+	Optional<Location> findLocationByIdAndStatus(Long id, String status);
 }

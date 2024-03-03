@@ -57,7 +57,10 @@
                                                         </div>
                                                         <div class="product-content">
                                                             <strong class="movie-list-info">
-                                                                <span class="gr_15"></span>
+                                                                <span th:class="${mv.rats == '15세이상관람가'} ? 'gr_15' : ''"></span>
+                                                                <span th:class="${mv.rats == '전체관람가'} ? 'gr_all' : ''"></span>
+                                                                <span th:class="${mv.rats == '12세이상관람가'} ? 'gr_12' : ''"></span>
+                                                                <span th:class="${mv.rats == '18세이상관람가'} ? 'gr_18' : ''"></span>
                                                                 <span th:text="${mv.title}"></span>
                                                             </strong>
                                                             <div class="product-price">

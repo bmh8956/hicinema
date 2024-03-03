@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -54,5 +55,9 @@ public class ScheduleService {
 
 	public List<Schedule> getSchduleList(Long screenId, LocalDateTime screeningDate, String status) {
 		return scheduleRepository.findByScreenIdAndScreeningDateAndStatusOrderByIdAsc(screenId, screeningDate, status);
+	}
+
+	public List<Map<String, Object>> getUserPageSchedule(String movieCd, LocalDateTime screeningDate, Long theaterId) {
+		return scheduleRepository.findUserPageSchedule(movieCd, screeningDate, theaterId);
 	}
 }

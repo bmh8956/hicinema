@@ -27,6 +27,7 @@ public class MovieController {
 		img_arr.add("/img_nsy/aespa_19207742.jpg");
 		img_arr.add("/img_nsy/BabyShark.jpg");
 		img_arr.add("/img_nsy/IfOnly_1920774.jpg");
+
 		model.addAttribute("images", img_arr);
 		MovieSearchDto mv1 = new MovieSearchDto();
 		mv1.setStatus("O");
@@ -44,7 +45,6 @@ public class MovieController {
 		model.addAttribute("now", list1);
 		model.addAttribute("soon", list2);
 		model.addAttribute("end", list3);
-
 		return "user/movie_list";
 	}
 
