@@ -4,7 +4,7 @@
   /* background-color: #000000 !; */
 }
 #before .middle-inner {
-  background-color: #ffffff !important;
+  background-color: #ffffff ;
   /* background-color: transparent !important; */
   position: fixed !important;
   margin: 0 auto;

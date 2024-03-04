@@ -1,18 +1,20 @@
-
+/* #after {
+  display: none;
+} */
 .preloader {
   display: none;
   /* background-color: #000000 !; */
 }
 #before .middle-inner {
   /* background-color: #000000 !important; */
-  background-color: transparent !important;
+  background-color: transparent ;
   position: fixed !important;
   margin: 0 auto;
   left: 0;
   right: 0;
   z-index: 10;
   padding: 0 !important;
-  height: 121px !important;
+  height: 121px ;
 }
 
 
@@ -414,10 +416,10 @@ input:focus::placeholder {
   background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0) 4%,
-    rgba(0, 0, 0, 0.6736229648109244) 28%,
-    rgba(0, 0, 0, 0.7884689031862745) 52%,
-    rgba(0, 0, 0, 0.5839871104691876) 81%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.8) 10%,
+    rgba(0, 0, 0, 0.9) 55%,
+    rgba(0, 0, 0, 0.8) 90%,
     rgba(0, 0, 0, 0) 100%
   );
 }
@@ -482,3 +484,43 @@ input:focus::placeholder {
   opacity: 1;
 }
 
+@media (max-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+  
+  .hicinema_logo > span{
+    display : none
+  }
+  .memberInfo > li, 
+  .memberInfo > li > a, 
+  .memberInfo> li > a > i ,
+  .memberInfo> li > a > i >span{
+    display: none;
+  }
+  .header_line{
+    display: none;
+  }
+  .menu_icon{
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+
+}

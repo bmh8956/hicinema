@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${title}">Title</title>
+	<!-- Meta Tag -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name='copyright' content=''>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Title Tag  -->
+	<title th:text="${title}">Title</title>
+	<title>마이페이지</title>
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="@{images/favicon.png}">
+	<!-- Web Font -->
+	<link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
 
-    <!-- Meta Tag -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name='copyright' content=''>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Title Tag  -->
-    <title>메인 페이지</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
-    <!-- Web Font -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-            rel="stylesheet">
-
-    <!-- StyleSheet -->
-    <!--    <link rel="stylesheet" th:href="@{/css/header_white.css}" />-->
-        <link rel="stylesheet" th:href="@{/css/header_white.css}" />
-    <link rel="stylesheet" th:href="@{/css/header_sticky.css}" />
+	<!-- StyleSheet -->
+	<link rel="stylesheet" th:href="@{/css/header_white.css}" />
+	<link rel="stylesheet" th:href="@{/css/header_sticky.css}" />
     <link rel="stylesheet" th:href="@{/css/footer.css}" />
-    <!-- Bootstrap -->
+	 <!-- Bootstrap -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <!-- Magnific Popup -->
     <link rel="stylesheet" th:href="@{/css/magnific-popup.min.css}">
@@ -46,13 +44,13 @@
     <!-- Slicknav -->
     <link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
 
-    <!-- Eshop StyleSheet -->
-    <link rel="stylesheet" th:href="@{/css/reset_knk.css}">
-    <link rel="stylesheet" th:href="@{/style_knk.css}">
-    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+	<!-- Eshop StyleSheet -->
+	<link rel="stylesheet" href="@{css/reset_knk.css}">
+	<link rel="stylesheet" href="@{style_knk.css}">
+	<link rel="stylesheet" href="@{css/responsive.css}">
 
-    <!-- Color CSS -->
-    <link rel="stylesheet" th:href="@{/css/color/color1_knk.css}">
+	 <!-- Color CSS -->
+    <link rel="stylesheet" th:href="@{/css/color/color1.css}">
     <!--<link rel="stylesheet" th:href="@{/css/color/color2.css}">-->
     <!--<link rel="stylesheet" th:href="@{/css/color/color3.css}">-->
     <!--<link rel="stylesheet" th:href="@{/css/color/color4.css}">-->
@@ -65,9 +63,9 @@
     <!--<link rel="stylesheet" th:href="@{/css/color/color11.css}">-->
     <!--<link rel="stylesheet" th:href="@{/css/color/color12.css}">-->
 
-    <!--    <link rel="stylesheet" th:href="@{#" id="colors">-->
+<!--    <link rel="stylesheet" th:href="@{#" id="colors">-->
     <link rel="stylesheet" th:href="@{/css/custom.css}" >
-
+    
     <!-- 폰트어썸 -->
     <script
             src="https://kit.fontawesome.com/e4e2f784f7.js"
@@ -82,22 +80,44 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css}" />
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
 
-    <!--    <div th:replace="user_test/common/commonCss.html"></div>-->
+    <style>
+        /*.content > .section {*/
+        /*    padding-top: 20%;*/
+        /*}*/
+    </style>
 
     <th:block layout:fragment="css"></th:block>
-
+    
+    
+    
 </head>
-<body>
+
+<body class="js">
+
 
 <div th:replace="fragments/header::header"></div>
 
-<div layout:fragment="content" class="content">
 
-</div>
+
+	<!-- Start Blog Single -->
+	<section class="blog-single section">
+		<div class="container">
+			<div class="row">
+				
+	<div th:replace="fragments/side_mypage::side" class="col-lg-3 col-12"></div>			
+				
+				<div layout:fragment="content" class="col-lg-9 col-12"></div>
+				
+
+			</div>
+		</div>
+	</section>
+	<!--/ End Blog Single -->
 
 <div th:replace="fragments/footer::footer"></div>
 
-<!-- Jquery -->
+
+	<!-- Jquery -->
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/jquery-migrate-3.0.0.js}"></script>
 <script th:src="@{/js/jquery-ui.min.js}"></script>
@@ -134,7 +154,9 @@
 <!-- Active JS -->
 <script th:src="@{/js/active.js}"></script>
 <script th:src="@{/js/header.js}"></script>
+<script th:src="@{js/clickmenu.js}"></script>
 
-<th:block layout:fragment="script"></th:block>
+
 </body>
+
 </html>

@@ -1,15 +1,21 @@
 package com.himedia.hicinema;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.himedia.hicinema.member.Member;
 
 @Controller
 @Slf4j
 @RequestMapping("/admin")
 public class AdminController {
+
 
 	@GetMapping(value = {"", "/"})
 	public String admin(Model model) {
@@ -27,4 +33,6 @@ public class AdminController {
 		model.addAttribute("title", "error");
 		return "admin/505";
 	}
+	
+
 }

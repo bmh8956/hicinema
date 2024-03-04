@@ -72,7 +72,7 @@ footer ul{
 
 .second-line{
   font-size: 13px;
-  margin: 22px 0;
+  margin: 27px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -85,9 +85,9 @@ footer ul{
 .info{
   margin-right:10px
 }
-.social_icon {
+/* .social_icon {
   margin-right: 70px !important;
-}
+} */
 
 .social_icon > a > i{
 background-color: #8c8c8c;
