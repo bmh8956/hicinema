@@ -1,7 +1,10 @@
 package com.himedia.hicinema.movie.seat;
 
+import com.himedia.hicinema.movie.schedule.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SeatRepository extends JpaRepository<Seat, Long> {
+import java.util.List;
 
+public interface SeatRepository extends JpaRepository<Seat, Long> {
+	List<Seat> findByScheduleOrderByIdAsc(Schedule schedule);
 }

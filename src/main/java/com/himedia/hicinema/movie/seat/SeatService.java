@@ -30,4 +30,8 @@ public class SeatService {
 			seatRepository.save(seat);
 		}
 	}
+
+	public List<Seat> getSeatList(Schedule schedule) {
+		return seatRepository.findByScheduleOrderByIdAsc(schedule);
+	}
 }

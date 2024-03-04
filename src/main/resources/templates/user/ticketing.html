@@ -512,7 +512,7 @@
             let data = {
                 schedule_id: document.querySelector(".reservation.active").dataset.id
             }
-            sessionStorage.setItem("info", JSON.stringify(data));
+            sessionStorage.setItem("schedule", JSON.stringify(data));
             await next_page();
         }
 
@@ -524,6 +524,7 @@
             datepicker();
             li_click();
             get_theaters(document.querySelector(".theater-location .loc.active").dataset.id);
+
         });
     </script>
 </th:block>
