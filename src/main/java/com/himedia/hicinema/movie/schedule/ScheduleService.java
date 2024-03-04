@@ -60,4 +60,8 @@ public class ScheduleService {
 	public List<Map<String, Object>> getUserPageSchedule(String movieCd, LocalDateTime screeningDate, Long theaterId) {
 		return scheduleRepository.findUserPageSchedule(movieCd, screeningDate, theaterId);
 	}
+
+	public Schedule getSchedule(Long id) {
+		return scheduleRepository.findById(id).get();
+	}
 }

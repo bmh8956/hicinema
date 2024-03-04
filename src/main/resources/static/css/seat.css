@@ -44,6 +44,11 @@ body {
     cursor: not-allowed;
 }
 
+.seat.paid {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
 .seat:hover {
     background-color: #5cb85c;
 }
