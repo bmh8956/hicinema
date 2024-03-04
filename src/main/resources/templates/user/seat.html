@@ -97,9 +97,9 @@
                     seat.id = abc[rows_cnt] + _COLS;
                 }
                 seat.classList.add('seat');
-                if (abc[rows_cnt] === 'A') {
-                    seat.setAttribute('disc', '-1000')
-                }
+                // if (abc[rows_cnt] === 'A') {
+                //     seat.setAttribute('disc', '-1000')
+                // }
                 seat.style.fontSize = '80%'
                 seat.innerHTML = seat.id
                 row.appendChild(seat);
@@ -187,12 +187,14 @@
 
         let data = {};
         let arr = [];
+        let id_arr = [];
         if (selected_seat.length > 0) {
             for (let i = 0; i < selected_seat.length; i++) {
                 arr[i] = selected_seat[i].id;
                 if (selected_seat[i].getAttribute('disc')) {
                     disc += Number(selected_seat[i].getAttribute('disc'))
                 }
+                id_arr.push(selected_seat[i].dataset.id)
             }
             data['seat'] = arr.join(",");
         } else {
@@ -219,6 +221,7 @@
         form.set("total", data['total']);
         form.set("schedule_id", JSON.parse(sessionStorage.getItem("schedule")).schedule_id)
         form.set("seat", data['seat']);
+        form.set("seats_id", id_arr.join(","))
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
         form.set("_csrf", token);
@@ -298,6 +301,9 @@
                         let divs = document.querySelectorAll(".seats .seat_row div.seat")
                         for (let div of divs) {
                             for (let seat of seats) {
+                                if(div.id == seat.name) {
+                                    div.dataset.id = seat.id;
+                                }
                                 if (seat.status == 'P' && div.id == seat.name) {
                                     console.log(seat.name)
                                     div.classList.add("paid");

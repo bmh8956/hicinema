@@ -3,6 +3,8 @@ package com.himedia.hicinema.reservation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.JsonObject;
+import com.himedia.hicinema.member.Member;
+import com.himedia.hicinema.member.MemberService;
 import com.himedia.hicinema.movie.Movie;
 import com.himedia.hicinema.movie.MovieService;
 import com.himedia.hicinema.movie.loc.Location;
@@ -14,6 +16,10 @@ import com.himedia.hicinema.movie.seat.SeatService;
 import com.himedia.hicinema.movie.theater.Theater;
 import com.himedia.hicinema.movie.theater.TheaterService;
 import com.himedia.hicinema.pay.KakaoPay;
+import com.himedia.hicinema.pay.KakaoPayApprovalVO;
+import com.himedia.hicinema.payment.Payment;
+import com.himedia.hicinema.payment.PaymentMovie;
+import com.himedia.hicinema.payment.PaymentService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,11 +29,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -44,6 +53,8 @@ public class ReservationController {
     private final MovieService movieService;
     private final ScheduleService scheduleService;
     private final SeatService seatService;
+    private final PaymentService paymentService;
+    private final ReservationService reservationService;
 
     @Setter(onMethod_ = @Autowired)
     private KakaoPay kakaopay;
@@ -200,12 +211,44 @@ public class ReservationController {
     }
 
     @RequestMapping("/complete")
-    public String kakaopaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
+    public String kakaopaySuccess(@RequestParam("pg_token") String pg_token, Model model, Principal principal) {
         log.info("......................kakaoPaySuccess get......................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
+        KakaoPayApprovalVO payInfo = new KakaoPayApprovalVO();
+        Long id = null;
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+            if (authentication != null && authentication.isAuthenticated()) {
+                payInfo = kakaopay.kakaoPayInfo(pg_token);
+                Member member = reservationService.getMember(principal.getName());
+                id = paymentService.savePayment(payInfo, member.getId());
+            } else {
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("info", payInfo);
+        model.addAttribute("payId", id);
         return "user_test/kakaoPaySuccess";
+    }
+
+    @PostMapping("/paymentMovie/post")
+    @ResponseBody
+    public ResponseEntity<String> paymentMoviePost(PaymentMovie pm, Principal principal) {
+        JsonObject jo = new JsonObject();
+        try{
+            Member member = reservationService.getMember(principal.getName());
+            paymentService.savePaymentMovie(pm, member.getId());
+            jo.addProperty("msg", "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.addProperty("msg", "error");
+        }
+
+        return new ResponseEntity<>(jo.toString(), HttpStatus.OK);
     }
 
     @RequestMapping("/SuccessFail")
