@@ -39,25 +39,31 @@
                     <div class="top_navmenu">
                         <div class="hicinema_logo">
                             <h1 class="logologo" data-text="HIC">
-                                <a href="">HIC</a>
+                                <a th:href="@{/}">HIC</a>
                             </h1>
                             <span>ENJOY CULTUREFLEX</span>
                         </div>
                         <div class="member_menu">
                             <ul class="memberInfo">
                                 <li>
-                                    <a href=""
+                                    <a  sec:authorize="isAnonymous()" th:href="@{/member/login}"
                                     ><i class="fa-solid fa-lock"></i><span>로그인</span></a
                                     >
+                                    
+                                    
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}"
+                                    
+                                    ><i class="fa-solid fa-arrow-right-from-bracket"></i><span>로그아웃</span></a
+                                    >
                                 </li>
-                                <li>
-                                    <a href=""
+                                <li>  
+                                    <a sec:authorize="isAnonymous()" th:href="@{/member/register}"
                                     ><i class="fa-solid fa-user-plus"></i
                                     ><span>회원가입</span></a
                                     >
                                 </li>
                                 <li>
-                                    <a href=""
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/member/mypage_main}"
                                     ><i class="fa-solid fa-user-large"></i
                                     ><span>마이페이지</span></a
                                     >
@@ -80,7 +86,7 @@
                                     <a href="">예매</a>
                                     <div>
                                         <ul>
-                                            <li><a href="/reservation/ticketing">예매하기</a></li>
+                                            <li><<a href="/reservation/ticketing">예매하기</a></li>
                                             <li><a href="">상영시간표</a></li>
                                         </ul>
                                     </div>
@@ -457,8 +463,10 @@
                         </nav>
 
                         <div class="my">
-                            <a href="마이영화관"><i class="fa-regular fa-star"></i></a>
-                            <a href="마이페이지"><i class="fa-regular fa-user"></i></a>
+                        
+                            <a href="마이영화관"><i class="fa-solid fa-star"></i></a>
+							<a href="마이페이지"><i class="fa-solid fa-user"></i></a>
+                            
                         </div>
                     </div>
                 </div>

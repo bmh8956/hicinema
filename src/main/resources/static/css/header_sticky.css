@@ -3,6 +3,7 @@
 }
 #after .middle-inner {
   background-color: #ffffff !important;
+  box-shadow: 0 8px 8px -5px rgba(97, 97, 97, 0.6);
   /* background-color: transparent !important; */
   position: fixed !important;
   margin: 0 auto;

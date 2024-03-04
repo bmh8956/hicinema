@@ -8,7 +8,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import java.util.List;
 import java.util.Optional;
 
-public interface MovieRepository extends JpaRepository<Movie, Long>,
+public interface MovieRepository extends JpaRepository<Movie, String>,
 		QuerydslPredicateExecutor<Movie>, MovieRepositoryCustom {
 	Optional<Movie> findByTitle(String title);
 	Optional<Movie> findByMovieCd(String movieCd);
