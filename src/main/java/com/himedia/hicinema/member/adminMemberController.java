@@ -18,23 +18,7 @@ public class adminMemberController {
 
 	private final MemberService memberService;
 
-//	@GetMapping(value = {"", "/"})
-//	public String admin(Model model) {
-//		model.addAttribute("title", "관리자 메인");
-//		return "admin/index";
-//	}
-//
-//	@GetMapping("/index")
-//	public String index(Model model) {
-//		return "redirect:/admin";
-//	}
-//
-//	@GetMapping("/error/505")
-//	public String error_505(Model model) {
-//		model.addAttribute("title", "error");
-//		return "admin/505";
-//	}
-	
+
 	 @GetMapping("/member/memberlist")
 	 public String memberlist(Model model, @RequestParam(value="page", defaultValue="0") int page) {
 	    Page<Member> paging = this.memberService.getList(page);

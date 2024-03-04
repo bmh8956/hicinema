@@ -1,11 +1,14 @@
 package com.himedia.hicinema.member;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -80,11 +83,15 @@ public class MemberService {
 		
 	}
 	
-	// 회원 리스트 페이징
+	// 회원 리스트 페이징 (게시물을 역순(최신순)으로 조회)
 	public Page<Member> getList(int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+        
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("regdate"));  //desc 내림차순
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.memberRepository.findAll(pageable);
+        
     }
-
+	
 	
 }

@@ -7,21 +7,22 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class MemberCreateForm {
-	@Size(min = 4 , max = 15)     // 문자열의 길이 검증
+	@Size(min = 6 , max = 15, message = "ID는 6자에서 15사이로 입력해 주세요.")     // 문자열의 길이 검증
 	@NotEmpty(message = "ID를 입력해주세요.")
 	private String memberId;
 	
 	@NotEmpty(message = "이름을 입력해주세요.")
 	private String name;
 	
-	@Size(min = 4 , max = 15)  
+	@Size(min = 6 , max = 15, message = "비밀번호는 6자에서 15사이로 입력해 주세요.")  
 	@NotEmpty(message = "비밀번호를 입력해주세요.")
 	private String password1;
 	
 	
-	@Size(min = 4 , max = 15)  
+	@Size(min = 6 , max = 15 , message = "비밀번호는 6자에서 15사이로 입력해 주세요.")  
 	@NotEmpty(message = "비밀번호를 확인해주세요.")
 	private String password2;
 	

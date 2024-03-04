@@ -4,7 +4,25 @@
       layout:decorate="~{/layouts/layout_admin}">
 
 <th:block layout:fragment="css">
-<link rel="stylesheet" th:href="@{/css/style_knk.css}">
+<link rel="stylesheet" th:href="@{/admin/css/style_knk.css}">
+
+<style>
+.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #8a63c2 !important;
+    border-color: #c378ff !important;
+  }
+  
+.pagination {
+    margin-top: 20px !important; 
+    }
+    
+ .page-link {
+    color: #ae66ff;
+ } 
+
+</style>
 </th:block>
 
 
@@ -96,7 +114,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="question, loop : ${paging}">
+                      <tr th:each="member, loop : ${paging}">
                         <td>
                           <div class="form-check">
                             <label class="form-check-label">
@@ -105,12 +123,12 @@
                           </div>
                         </td>
                         
-                        
-                        <td th:text="${member.id}"></td>
-                        <td th:text="${member.memberId}"></td>
+                        th:href="@{/member/login}
+                        <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+                        <td><a th:href="@{|/admin/member/member_edit/${member.memberId}|}" th:text="${member.memberId}"></a></td>
                         <td th:text="${member.name}"></td>
                         <td th:text="${member.email}"></td>
-                        <td th:text="${member.regdate}"></td>
+                        <td th:text="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="${member.role}"></td>
                        
                         <td>
@@ -122,16 +140,31 @@
 
                     </tbody>
                   </table>
-                  <div class="pagebtn">
-                    <!--이전 페이지 -->
-                    <button class="page-button" onclick="previousPage()">이전 </button>
-                    <!-- 번호 -->
-                    <button class="page-button-nunber" onclick="previousPage()">1 </button>
-                    <button class="page-button-nunber" onclick="previousPage()">2 </button>
-                    <button class="page-button-nunber" onclick="previousPage()">3 </button>
-                    <!-- 다음 페이지 -->
-                    <button class="page-button" onclick="nextPage()">다음</button>
-                  </div>
+                  
+                    <!-- 페이징처리 시작 -->
+				    <div th:if="${!paging.isEmpty()}">
+				        <ul class="pagination justify-content-center">
+				            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+				                <a class="page-link"
+				                    th:href="@{|?page=${paging.number-1}|}">
+				                    <span>이전</span>
+				                </a>
+				            </li>
+				            <li th:each="page: ${#numbers.sequence(1, paging.totalPages-1)}"
+				            	th:if="${page >= paging.number-2 and page <= paging.number+2}"
+				                th:classappend="${page == paging.number} ? 'active'" 
+				                class="page-item">
+				                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+				            </li>
+				            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+				                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+				                    <span>다음</span>
+				                </a>
+				            </li>
+				        </ul>
+				    </div>
+				    <!-- 페이징처리 끝 -->
+                  
                 </div>
               </div>
 
