@@ -33,6 +33,7 @@ public class AdminController {
 		model.addAttribute("title", "error");
 		return "admin/505";
 	}
+
 	
 
 }

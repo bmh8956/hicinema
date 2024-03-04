@@ -13,110 +13,110 @@
 </th:block>
 
 <div layout:fragment="content">
-<!-- Shopping Cart -->
-<div class="shopping-cart section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-lg-7 ticketing">
-                        <div class="ticketing-header">
-                            <div class="ticketing-title">
-                                예매정보
-                            </div>
-                        </div>
-                        <div>
-                            <div class="row">
-                                <div class="col-lg-5">
-                                    <img th:src="${schedule.movie.imgUrl}"
-                                         alt="" srcset="">
+    <!-- Shopping Cart -->
+    <div class="shopping-cart section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-lg-7 ticketing">
+                            <div class="ticketing-header">
+                                <div class="ticketing-title">
+                                    예매정보
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="movie-title">
-                                        <span th:class="${schedule.movie.rats == '15세이상관람가'} ? 'gr_15' : 'd-none'"></span>
-                                        <span th:class="${schedule.movie.rats == '전체관람가'} ? 'gr_all' : 'd-none'"></span>
-                                        <span th:class="${schedule.movie.rats == '12세이상관람가'} ? 'gr_12' : 'd-none'"></span>
-                                        <span th:class="${schedule.movie.rats == '18세이상관람가'} ? 'gr_18' : 'd-none'"></span>
-                                        <span th:text="${schedule.movie.title}"></span>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <img th:src="${schedule.movie.imgUrl}"
+                                             alt="" srcset="" id="movie_img">
                                     </div>
-                                    <div class="movie-detail-info">
-                                        <div class="row">
-                                            <span>일시 : </span>
-                                            <div class="col-lg-9">
-
-                                                [[${#temporals.format(schedule.startTime, 'yyyy.MM.dd (E) HH:mm')}]]
-                                                <span th:if="${#temporals.format(schedule.startTime, 'yyyy.MM.dd') == #temporals.format(schedule.endTime, 'yyyy.MM.dd')}">
-        ~ <span th:text="${#temporals.format(schedule.endTime, 'HH:mm')}"></span>
-    </span>
-                                                <span th:unless="${#temporals.format(schedule.startTime, 'yyyy.MM.dd') == #temporals.format(schedule.endTime, 'yyyy.MM.dd')}">
-        ~ <span th:text="${#temporals.format(schedule.endTime, 'yyyy.MM.dd (E) HH:mm')}"></span>
-    </span>
-
-                                            </div>
+                                    <div class="col-lg-6">
+                                        <div class="movie-title">
+                                            <span th:class="${schedule.movie.rats == '15세이상관람가'} ? 'gr_15' : 'd-none'"></span>
+                                            <span th:class="${schedule.movie.rats == '전체관람가'} ? 'gr_all' : 'd-none'"></span>
+                                            <span th:class="${schedule.movie.rats == '12세이상관람가'} ? 'gr_12' : 'd-none'"></span>
+                                            <span th:class="${schedule.movie.rats == '18세이상관람가'} ? 'gr_18' : 'd-none'"></span>
+                                            <span th:text="${schedule.movie.title}" id="title"></span>
+                                            <input type="hidden" name="" id="movie_rats" th:value="${schedule.movie.rats}">
                                         </div>
-                                        <div class="row">
-                                            <span>영화관 : </span>
-                                            <div class="col-lg-9">
-                                                [[${schedule.screen.theater.name}]] [[${schedule.screen.name}]]관
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <span>인원 : </span>
-                                            <div class="col-lg-9">
-                                                <th:block th:text="${(!info['adult'].equals('0')) ? '성인 ' + info['adult'] : ''}"></th:block>
-                                                <th:block th:text="${(!info['teenager'].equals('0')) ? '청소년 ' + info['teenager'] : ''}"></th:block>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <span>좌석 : </span>
-                                            <div class="col-lg-9" th:text="${info['seat']}">
+                                        <div class="movie-detail-info">
+                                            <div class="row">
+                                                <span>일시 : </span>
+                                                <div class="col-lg-9" id="screeningDate">
 
+                                                    [[${#temporals.format(schedule.screeningDate, 'yyyy.MM.dd (E)')}]]
+                                                    <th:block th:text="${#temporals.format(schedule.startTime, 'HH:mm') + '~' + #temporals.format(schedule.endTime, 'HH:mm')}"></th:block>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <span>영화관 : </span>
+                                                <div class="col-lg-9" id="theater_info">
+                                                    [[${schedule.screen.theater.name}]] [[${schedule.screen.name}]]관
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <span>인원 : </span>
+                                                <div class="col-lg-9" id="guests_info">
+                                                    <th:block
+                                                            th:text="${(!info['adult'].equals('0')) ? '성인 ' + info['adult'] : ''}"></th:block>
+                                                    <th:block
+                                                            th:text="${(!info['teenager'].equals('0')) ? '청소년 ' + info['teenager'] : ''}"></th:block>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <span>좌석 : </span>
+                                                <div class="col-lg-9" th:text="${info['seat']}" id="seat_info">
+
+                                                </div>
+                                                <input type="hidden" name="" id="seats_id" th:value="${info['seats_id']}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-2 ticketing">
-                        <div class="ticketing-header">
-                            <div class="ticketing-title">
-                                결제수단
-                            </div>
-                        </div>
-                        <div class="payment-icon">
-                            <div class="row pay-icon">
-                                <div class="payment-radio">
-                                    <input type="radio" name="" id="" checked>
-                                </div>
-                                <div class="p-icon">
-                                    <img th:src="@{/images/payment_icon_yellow_medium.png}" alt="" srcset="">
+                        <div class="col-lg-2 ticketing">
+                            <div class="ticketing-header">
+                                <div class="ticketing-title">
+                                    결제수단
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 ticketing">
-                        <div class="ticketing-header">
-                            <div class="ticketing-title">
-                                결제하기
+                            <div class="payment-icon">
+                                <div class="row pay-icon">
+                                    <div class="payment-radio">
+                                        <input type="radio" name="" id="" checked>
+                                    </div>
+                                    <div class="p-icon">
+                                        <img th:src="@{/images/payment_icon_yellow_medium.png}" alt="" srcset="">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="payment-info">
-                                <span>결제금액 &nbsp&nbsp:</span>
-                                <span id="total_price">[[${info['total_price']}]]</span>
+                        <div class="col-lg-3 ticketing">
+                            <div class="ticketing-header">
+                                <div class="ticketing-title">
+                                    결제하기
+                                </div>
                             </div>
-                        </div>
-                        <div class="payment-btn">
-                            <button type="button" class="btn" onclick="kakaoPay()">결제</button>
+                            <div>
+                                <div class="payment-info">
+                                    <span>결제금액 &nbsp&nbsp:</span>
+                                    <span id="total_price">[[${info['total_price']}]]</span>
+                                    <input type="hidden" name="" id="price_info" th:value="${info['total_price']}">
+                                </div>
+                            </div>
+                            <div class="payment-btn">
+                                <button type="button" class="btn" onclick="kakaoPay()">결제</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!--/ End Shopping Cart -->
+    <!--/ End Shopping Cart -->
 </div>
 
 <th:block layout:fragment="script">
@@ -127,11 +127,13 @@
         let header = $("meta[name='_csrf_header']").attr("content");
 
         let title = /*[[${schedule.movie.title}]]*/
-        let schedule_id = /*[[${info['schedule_id']}]]*/
-        let total_price = /*[[${info['total_price']}]]*/
+            let
+        schedule_id = /*[[${info['schedule_id']}]]*/
+            let
+        total_price = /*[[${info['total_price']}]]*/
 
-        console.log(title)
-        let kakaoPay =() => {
+            console.log(title)
+        let kakaoPay = () => {
             on_preloader();
             let data = {
                 title: title,
@@ -141,7 +143,7 @@
                 type: "post",
                 url: "/kakao/kakaoPay",
                 data: data,
-                beforeSend : function(xhr){
+                beforeSend: function (xhr) {
                     /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
                     xhr.setRequestHeader(header, token);
                 },
@@ -164,17 +166,51 @@
 
         let off_preloader = (sec) => {
             $('.preloader').delay(sec * 1000).fadeOut('slow');
-            setTimeout(function() {
+            setTimeout(function () {
                 //After 2s, the no-scroll class of the body will be removed
                 $('body').removeClass('no-scroll');
             }, sec * 1000); //Here you can change preloader time
         }
 
-        function getPayInfo (data){
+        function getPayInfo(data) {
             data = JSON.parse(data)
             console.log(data);
-            if(data.msg === 'success') {
-                location.href = "/mypage/ticketing";
+            let schedule_id = /*[[${schedule.id}]]*/
+            if (data != null) {
+                console.log("success")
+                // location.href = "/mypage/ticketing";
+                let obj = {
+                    price: document.getElementById("price_info").value.replace(/\s+/g, ' '),
+                    theaterInfo: document.getElementById("theater_info").textContent.replace(/\s+/g, ' '),
+                    visitors: document.getElementById("guests_info").textContent.replace(/\s+/g, ' '),
+                    seat: document.getElementById("seat_info").textContent.replace(/\s+/g, ' '),
+                    seats_id: document.getElementById("seats_id").value.replace(/\s+/g, ' '),
+                    payId: data.paymentId,
+                    title: document.getElementById("title").textContent.replace(/\s+/g, ' '),
+                    scrDate: document.getElementById("screeningDate").textContent.replace(/\s+/g, ' '),
+                    scheduleId: schedule_id,
+                    poster:document.getElementById("movie_img").src
+                }
+                console.log(obj)
+                $.ajax({
+                    type: "post",
+                    url: "/reservation/paymentMovie/post",
+                    data: obj,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (res) {
+                        if(typeof res === 'string') {
+                            res = JSON.parse(res)
+                        }
+                        if(res.msg === 'success') {
+                            console.log(res)
+                            location.href = "/member/mypage/ticketing";
+                        } else {
+
+                        }
+                    }
+                });
             } else {
                 alert("결제에 실패했습니다. 다시 시도해주세요");
                 location.href = "/reservation/ticketing/seat";

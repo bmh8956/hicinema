@@ -1,6 +1,12 @@
 package com.himedia.hicinema.movie;
 
+import com.himedia.hicinema.member.Member;
+import com.himedia.hicinema.member.MemberSecurityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +26,7 @@ public class MovieController {
 	private final MovieService movieService;
 
 	@GetMapping("/list")
-	public String getList(Model model, @RequestParam String type) {
+	public String getList(Model model, @RequestParam String type, Principal principal) {
 		model.addAttribute("title", "Movie");
 		model.addAttribute("type", type);
 
