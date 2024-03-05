@@ -17,8 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 public class adminMemberController {
 
 	private final MemberService memberService;
-
-
+	
+	
+	// 회원리스트
+	
 	 @GetMapping("/member/memberlist")
 	 public String memberlist(Model model, @RequestParam(value="page", defaultValue="0") int page) {
 	    Page<Member> paging = this.memberService.getList(page);
@@ -27,4 +29,15 @@ public class adminMemberController {
 	    }
 	
 	
+    // 회원정보 상세조회
+	 @GetMapping("/member/member_edit")
+	 public String findById(@RequestParam("id") long id , Model model) {
+		 
+		// Member member = memberService.findById(id);
+		// model.addAttribute("member", member);
+		 return "admin/member/member_edit";
+		 
+	 }
+	 
+	 
 }

@@ -7,8 +7,8 @@
 
 <th:block layout:fragment="css">
 <link rel="stylesheet" th:href="@{/css/color/color1_knk.css}">
-<link rel="stylesheet" th:href="@{/css/style_knk2.css}">
-<link rel="stylesheet" th:href="@{/style_knk.css}">
+<link rel="stylesheet" th:href="@{/style_knk2.css}">
+
 <link rel="stylesheet" th:href="@{/css/owl-carousel_knk.css}">
 <link rel="stylesheet" th:href="@{/css/reset_knk.css}">
 
@@ -30,22 +30,6 @@
 		<div class="container">
 			<div class="row">
 			
-			
-				<div class="col-12">
-					<div class="reply">
-						<form class="mypageform" action="#">
-							<div>
-								<h3>안녕하세요! <span th:text="${#authentication.name}"></span> 님</h3>
-								
-								
-								<h2><span th:text="${memberId}"></span></h2>
-							</div>
-						</form>
-					</div>
-					
-					
-					
-				</div>
 				
 				<div layout:fragment="content" class="col-lg-9 col-12">
 					<div class="blog-single-main">

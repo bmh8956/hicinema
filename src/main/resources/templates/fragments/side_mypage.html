@@ -7,7 +7,7 @@
 		<div class="main-sidebar">
 						<!-- Single Widget -->
 						<div class="single-widget">
-							<a href="mypage_knk.html"><h2 class="mypage">마이페이지</h2></a>
+							<a th:href="@{/member/mypage_main}"><h2 class="mypage">마이페이지</h2></a>
 						</div>
 						<!--/ End Single Widget -->
 						
@@ -47,8 +47,8 @@
 						<div class="single-widget category">
 							<h3 class="title">회원정보</h3>
 							<ul class="categor-list">
-								<li><a href="mypage_infoedit_knk.html">개인정보 수정</a></li>
-								<li><a href="mypage_secession_knk.html">회원탈퇴</a></li>
+								<li><a th:href="@{/member/mypage/mypage_edit}">개인정보 수정</a></li>
+								<li><a th:href="@{/member/mypage/mypage_secession}">회원탈퇴</a></li>
 							</ul>
 						</div>
 						<!--/ End Single Widget -->
