@@ -77,10 +77,9 @@ public class MemberService {
 	
 	// 회원 탈퇴 
 	
-	public void memberdelete (Member member) {
+	public boolean delete(String email, String password) {
 		
-		memberRepository.delete(member);
-		
+		return false;
 	}
 	
 	// 회원 리스트 페이징 (게시물을 역순(최신순)으로 조회)
@@ -92,6 +91,14 @@ public class MemberService {
         return this.memberRepository.findAll(pageable);
         
     }
+	
+	// 회원정보 조회
+	public Optional<Member> findById(long id) {
+		
+		return memberRepository.findById(id);
+	}
+
+	
 	
 	
 }

@@ -45,9 +45,9 @@
     <link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
 
 	<!-- Eshop StyleSheet -->
-	<link rel="stylesheet" href="@{css/reset_knk.css}">
-	<link rel="stylesheet" href="@{style_knk.css}">
-	<link rel="stylesheet" href="@{css/responsive.css}">
+	<link rel="stylesheet" href="@{/css/reset_knk.css}">
+	<link rel="stylesheet" href="@{/style_knk2.css}">
+	<link rel="stylesheet" href="@{/css/responsive.css}">
 
 	 <!-- Color CSS -->
     <link rel="stylesheet" th:href="@{/css/color/color1.css}">
@@ -103,7 +103,7 @@
 	<section class="blog-single section">
 		<div class="container">
 			<div class="row">
-				
+	<div th:replace="fragments/mypage_name::mypage_name" class= "col-12"></div>			
 	<div th:replace="fragments/side_mypage::side" class="col-lg-3 col-12"></div>			
 				
 				<div layout:fragment="content" class="col-lg-9 col-12"></div>
