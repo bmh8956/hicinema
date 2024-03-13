@@ -101,7 +101,7 @@ public class AdminMovieController {
 		model.addAttribute("title", "지역");
 		return "admin/movie/loc_list";
 	}
-
+	@CrossOrigin(origins = "http://localhost:3333")
 	@GetMapping("/loc_list/get")
 	public ResponseEntity<String> locGetList() throws JsonProcessingException {
 		JsonArray ja = new JsonArray();
@@ -354,6 +354,7 @@ public class AdminMovieController {
 		return "admin/movie/movie_list";
 	}
 
+	@CrossOrigin(origins = "http://localhost:3333")
 	@GetMapping("/list/get")
 	@ResponseBody
 	public ResponseEntity<String> getList(MovieSearchDto mv) throws JsonProcessingException {
