@@ -122,8 +122,7 @@
                               <i class="input-helper"></i></label>
                           </div>
                         </td>
-                        
-                        th:href="@{/member/login}
+
                         <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
                         <td><a th:href="@{|/admin/member/member_edit/${member.memberId}|}" th:text="${member.memberId}"></a></td>
                         <td th:text="${member.name}"></td>
@@ -150,11 +149,11 @@
 				                    <span>이전</span>
 				                </a>
 				            </li>
-				            <li th:each="page: ${#numbers.sequence(1, paging.totalPages-1)}"
+				            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
 				            	th:if="${page >= paging.number-2 and page <= paging.number+2}"
 				                th:classappend="${page == paging.number} ? 'active'" 
 				                class="page-item">
-				                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+				                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
 				            </li>
 				            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
 				                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
