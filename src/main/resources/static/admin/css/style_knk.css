@@ -8632,7 +8632,7 @@
 }
 
 #clear {
-	clear: both;
+  clear: both;
 }
 
 .box1 {
@@ -8642,7 +8642,7 @@
 .TOP3box {
   width: 200px;
   float: left;
-  
+
 }
 
 .card1 {
@@ -8729,14 +8729,21 @@
   text-align: center;
 }
 
+.thticketingnumber {
+  width: 200px;
+}
+
 .tdtitle {
   text-align: left !important;
 }
 
-.thstate, .thcategory, .thdate {
+.thstate, .thcategory, .thdate, .thname, .thauthority, .thid {
   width: 150px;
 }
 
+.themail {
+  width: 300px;
+}
 .thmanagement {
   width: 145px;
 }
@@ -8746,11 +8753,56 @@
   background-color: #f2edf3;
 }
 
-.table-bordered td {
- padding-top: 7px !important;
- padding-bottom: 7px !important;
+.searchbox {
+  width: 460px;
+  float: right;
+  margin-bottom: 15px;
 }
 
+.searchdate {
+  float: left;
+}
+
+select.form-control {
+  color: #495057 !important;
+  border: 1px solid #ced4da !important;
+  outline: none !important;
+}
+
+.searchdate input{
+  height: 33px;
+  border: 1px solid #ced4da;
+  color: #ced4da;
+  padding: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.searchdate h{
+  color: #ced4da;
+}
+
+.eventdate input{
+  height: 38px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  color: #495057;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+
+#selectbox {
+  width: 115px;
+  height: 33px;
+  float: left;
+}
+
+.table-bordered td {
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+}
 .pagebtn {
   margin-top: 40px;
   align-items: center;
@@ -8797,9 +8849,23 @@
 }
 
 .WD-btn {
+  width: 340px;
   float: right;
   margin-bottom: 15px;
 }
+
+.WD-btn .form-control {
+  border: 1px solid #ced4da !important
+}
+.btn1 button {
+  width: 165px !important;
+  /* padding: 15px 0 15px 0 !important; */
+}
+.btn1 button:first-child {
+  float: left;
+  margin-right: 10px;
+}
+
 
 *,
 *::before,
