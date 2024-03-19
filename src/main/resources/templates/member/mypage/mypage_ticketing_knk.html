@@ -39,7 +39,7 @@
                                         <div class="myticketing-title">
                                             <img class="ratings" th:src="${pay.poster}">
                                             <h4><b th:text="${pay.title}">파묘</b></h4>
-                                            <h>예매번호 00000000</h>
+                                            <h>예매번호 [[${pay.tid}]]</h>
                                         </div>
                                         <img class="myticketing-poster2" src="img_knk/파묘_메인.jpg">
                                         <div class="myticketing-info">
@@ -78,10 +78,14 @@
     <script>
         function cancel() {
             if (confirm('예매를 취소하시겠습니까?')) {
+                //
+
+                //
                 alert("예매 취소가 완료되었습니다.");
                 location.href = "mypage_ticketing_cancel_knk.html";
             } else {
-                alert("취소되었습니다.");
+                // alert("취소되었습니다.");
+                return
             }
         }
     </script>

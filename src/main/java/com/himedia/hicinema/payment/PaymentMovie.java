@@ -15,6 +15,8 @@ public class PaymentMovie {
 	@Column(name = "pay_movie_id")
 	private Long id;
 
+	private String tid;
+
 	private String title;
 	private LocalDateTime screeningDate;
 	private LocalDateTime startTime;

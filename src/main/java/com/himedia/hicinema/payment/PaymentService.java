@@ -25,6 +25,7 @@ public class PaymentService {
 		payment.setStatus("O");
 		payment.setRegDate(LocalDateTime.now());
 		payment.setMemberId(mb_id);
+		payment.setPrice(kpa.getAmount().getTotal());
 		Payment pay = paymentRepository.save(payment);
 		return pay.getId();
 	}
