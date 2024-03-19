@@ -189,7 +189,8 @@
                     title: document.getElementById("title").textContent.replace(/\s+/g, ' '),
                     scrDate: document.getElementById("screeningDate").textContent.replace(/\s+/g, ' '),
                     scheduleId: schedule_id,
-                    poster:document.getElementById("movie_img").src
+                    poster:document.getElementById("movie_img").src,
+                    tid:data.tid
                 }
                 console.log(obj)
                 $.ajax({
