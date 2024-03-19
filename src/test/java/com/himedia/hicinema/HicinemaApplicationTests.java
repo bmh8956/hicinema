@@ -1,5 +1,7 @@
 package com.himedia.hicinema;
 
+import com.himedia.hicinema.notice.Notice;
+import com.himedia.hicinema.notice.NoticeRepository;
 import com.himedia.hicinema.slide.MainSlide;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,20 +18,29 @@ import java.util.Queue;
 @SpringBootTest
 class HicinemaApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+//	@Test
+//	void contextLoads() {
+//	}
 
 //	@Autowired
-//	private MainSlideRepository mainSlideRepository;
-//
+//	private NoticeRepository noticeRepository;
+
 //	@Test
 //	void testJpa() {
-//		List<MainSlide> all = this.mainSlideRepository.findAll();
-//		assertEquals(2, all.size());
+//		Notice n1 = new Notice();
+//		n1.setTitle("공지사항1");
+//		n1.setCategory("전체");
+//		n1.setContent("전체 공지사항1");
+//		n1.setCreateDate(LocalDateTime.now());
+//		this.noticeRepository.save(n1);
 //
-//		MainSlide m = all.get(0);
-//		assertEquals("1-1", m.getImgId());
+//		Notice n2 = new Notice();
+//		n2.setTitle("공지사항2");
+//		n2.setCategory("전체");
+//		n2.setContent("전체 공지사항2");
+//		n2.setCreateDate(LocalDateTime.now());
+//		this.noticeRepository.save(n2);
+//
 //	}
 
 

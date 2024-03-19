@@ -8632,7 +8632,7 @@
 }
 
 #clear {
-	clear: both;
+  clear: both;
 }
 
 .box1 {
@@ -8642,7 +8642,7 @@
 .TOP3box {
   width: 200px;
   float: left;
-  
+
 }
 
 .card1 {
@@ -8800,8 +8800,8 @@ select.form-control {
 }
 
 .table-bordered td {
- padding-top: 7px !important;
- padding-bottom: 7px !important;
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
 }
 .pagebtn {
   margin-top: 40px;
@@ -22236,6 +22236,3 @@ dl li {
 .auth form .auth-link:hover {
   color: initial;
 }
-
-/*# sourceMappingURL=maps/style.css.map */
-
